@@ -24,6 +24,7 @@ Build **UnCopyright**: a jurisdiction-aware legal-tech platform ("From AI Creati
 - Sarah demo: full read-only walkthrough producing 21 conclusions across IN/US/UK, including the jurisdiction differentiator (US AI material = EXCLUDE, India = UNCERTAIN, UK = POTENTIALLY_CLAIMABLE).
 - Backend pytest suite `/app/backend/tests/test_uncopyright_api.py` — 13/13 passing.
 - Cinematic motion layer (user chose "cinematic & bold"): word-cascade hero with blur reveal, breathing ambient glows, drifting forensic record chips, film grain overlay, scan-line pipeline strip with pulse dots, cursor spotlights on cards, sidebar progress rail with spring checkmarks, timeline connector line draw + staggered event entrance, contribution bars that fill on load, jurisdiction card hover lift, `AnalysisRunOverlay` (IN→US→UK engine scan sequence, ~2.1s) before results, claim-matrix badge cascade, blur-slide step transitions, `prefers-reduced-motion` respected.
+- Landing-only cinematic pack (follow-up): `fx/ScrambleText.jsx` decrypt-reveal headline, `fx/EngineTicker.jsx` rolling typewriter "live engine preview" terminal, SVG stroke-drawn shield logo (`LogoMark`), cursor-parallax on drifting chips (springs + motion values), self-cycling pipeline strip (active step lights up every 1.1s), blur+depth scroll reveals on all sections.
 
 ## Test Results
 - `/app/test_reports/iteration_1.json`: backend 100% (13/13), all frontend flows pass, no blocking bugs.

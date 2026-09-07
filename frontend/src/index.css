@@ -175,6 +175,12 @@ html, body, #root {
 }
 .uc-spot-target:hover::after { opacity: 1; }
 
+@keyframes uc-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+.uc-caret { animation: uc-blink 1s step-end infinite; }
+
 @media (prefers-reduced-motion: reduce) {
   .uc-breathe, .uc-drift, .uc-drift-slow, .uc-scanx, .uc-pulse { animation: none !important; }
 }

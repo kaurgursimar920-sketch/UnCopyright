@@ -1,0 +1,132 @@
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --uc-bg: #07090e;
+  --uc-surface: #0d111a;
+  --uc-card: #131926;
+  --uc-border: rgba(255, 255, 255, 0.08);
+  --uc-border-strong: rgba(255, 255, 255, 0.14);
+  --uc-text: #e6eaf2;
+  --uc-text-muted: #8a94a8;
+  --uc-text-dim: #5a6478;
+  --uc-gold: #d97706;
+  --uc-gold-glow: #f59e0b;
+  --uc-green: #10b981;
+  --uc-amber: #f59e0b;
+  --uc-red: #ef4444;
+  --uc-blue: #3b82f6;
+  --uc-violet: #8b5cf6;
+  --uc-pink: #ec4899;
+}
+
+html, body, #root {
+  background: var(--uc-bg);
+  color: var(--uc-text);
+  font-family: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+.font-display { font-family: "Outfit", sans-serif; letter-spacing: -0.02em; }
+.font-mono { font-family: "JetBrains Mono", monospace; }
+.font-body { font-family: "IBM Plex Sans", sans-serif; }
+
+/* Blueprint grid backdrop */
+.uc-grid-bg {
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.06) 1px, transparent 0);
+  background-size: 32px 32px;
+}
+.uc-line-bg {
+  background-image:
+    linear-gradient(to right, rgba(255,255,255,0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255,255,255,0.035) 1px, transparent 1px);
+  background-size: 80px 80px;
+}
+
+.uc-card {
+  background: var(--uc-card);
+  border: 1px solid var(--uc-border);
+  border-radius: 6px;
+}
+.uc-card-hover:hover {
+  border-color: var(--uc-border-strong);
+  background: #17203020;
+}
+
+/* Corner ticks */
+.uc-ticks { position: relative; }
+.uc-ticks::before, .uc-ticks::after,
+.uc-ticks > .tl, .uc-ticks > .br {
+  content: "";
+  position: absolute;
+  width: 10px; height: 10px;
+  border-color: rgba(217, 119, 6, 0.5);
+  pointer-events: none;
+}
+.uc-ticks::before { top: -1px; left: -1px; border-top: 1px solid; border-left: 1px solid; }
+.uc-ticks::after { top: -1px; right: -1px; border-top: 1px solid; border-right: 1px solid; }
+.uc-ticks > .tl { bottom: -1px; left: -1px; border-bottom: 1px solid rgba(217, 119, 6, 0.5); border-left: 1px solid rgba(217, 119, 6, 0.5); }
+.uc-ticks > .br { bottom: -1px; right: -1px; border-bottom: 1px solid rgba(217, 119, 6, 0.5); border-right: 1px solid rgba(217, 119, 6, 0.5); }
+
+.uc-label {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: var(--uc-text-dim);
+  font-weight: 600;
+}
+
+.uc-cite {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.7rem;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: rgba(217, 119, 6, 0.08);
+  color: var(--uc-gold-glow);
+  border: 1px solid rgba(217, 119, 6, 0.28);
+  display: inline-block;
+}
+
+/* shadcn tokens (dark) */
+@layer base {
+  :root {
+    --background: 220 20% 4%;
+    --foreground: 210 20% 92%;
+    --card: 222 20% 8%;
+    --card-foreground: 210 20% 92%;
+    --popover: 222 20% 8%;
+    --popover-foreground: 210 20% 92%;
+    --primary: 32 95% 44%;
+    --primary-foreground: 210 20% 98%;
+    --secondary: 220 15% 14%;
+    --secondary-foreground: 210 20% 92%;
+    --muted: 220 15% 14%;
+    --muted-foreground: 220 8% 60%;
+    --accent: 220 15% 14%;
+    --accent-foreground: 210 20% 92%;
+    --destructive: 0 84% 55%;
+    --destructive-foreground: 210 20% 98%;
+    --border: 220 15% 18%;
+    --input: 220 15% 18%;
+    --ring: 32 95% 55%;
+    --radius: 0.4rem;
+  }
+  * { @apply border-border; }
+  body { @apply bg-background text-foreground; }
+}
+
+@media print {
+  body { background: white !important; color: black !important; }
+  .uc-no-print { display: none !important; }
+  .uc-print-page { break-inside: avoid; }
+  .uc-card { background: white !important; border-color: #cbd5e1 !important; color: black !important; }
+  .uc-line-bg, .uc-grid-bg { background: white !important; }
+  * { color: black !important; }
+  .uc-cite { background: #fef3c7 !important; color: #92400e !important; border-color: #f59e0b !important; }
+}

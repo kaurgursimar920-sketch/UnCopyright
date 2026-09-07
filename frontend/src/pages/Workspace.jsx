@@ -1,0 +1,182 @@
+import { useState, useEffect } from "react";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
+import { toast } from "sonner";
+import WorkflowSidebar from "@/components/WorkflowSidebar";
+import WorkTypeSelector from "@/components/WorkTypeSelector";
+import MaterialUpload from "@/components/MaterialUpload";
+import CreationTimeline from "@/components/CreationTimeline";
+import ContributionMap from "@/components/ContributionMap";
+import JurisdictionEngine from "@/components/JurisdictionEngine";
+import LegalAnalysisView from "@/components/LegalAnalysisView";
+import ComparativeClaimMatrix from "@/components/ComparativeClaimMatrix";
+import EvidenceMap from "@/components/EvidenceMap";
+import LawyerReview from "@/components/LawyerReview";
+import { Button } from "@/components/ui/button";
+import { api } from "@/lib/api";
+import { ChevronRight, Loader2 } from "lucide-react";
+
+const STEP_ORDER = ["type", "upload", "history", "contribution", "jurisdiction", "analysis", "matrix", "evidence", "review"];
+
+export default function Workspace() {
+  const { workId } = useParams();
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const [work, setWork] = useState(null);
+  const [events, setEvents] = useState([]);
+  const [files, setFiles] = useState([]);
+  const [jurisdictions, setJurisdictions] = useState(["India", "United States", "United Kingdom"]);
+  const [analysis, setAnalysis] = useState(null);
+  const [step, setStep] = useState(workId ? "history" : "type");
+  const [busy, setBusy] = useState(false);
+
+  const isDemo = !!work?.is_demo;
+
+  useEffect(() => {
+    if (!workId) return;
+    (async () => {
+      try {
+        const data = await api.getWork(workId);
+        setWork(data.work);
+        setEvents(data.events || []);
+        setFiles(data.files || []);
+        if (data.events?.length) setStep("history");
+      } catch (e) {
+        toast.error("Could not load work");
+      }
+    })();
+  }, [workId]);
+
+  const completed = STEP_ORDER.slice(0, STEP_ORDER.indexOf(step));
+
+  const onPickType = async (workType) => {
+    setBusy(true);
+    try {
+      const w = await api.createWork({ work_type: workType, title: `New ${workType} Work` });
+      setWork(w);
+      navigate(`/workspace/${w.id}`, { replace: true });
+      setStep("upload");
+    } catch (e) {
+      toast.error("Could not create workspace");
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const saveEvents = async (nextEvents) => {
+    setEvents(nextEvents);
+    if (isDemo) return;
+    try {
+      await api.setEvents(work.id, nextEvents);
+    } catch (e) {
+      toast.error("Failed to save events");
+    }
+  };
+
+  const runAnalysis = async () => {
+    if (!events.length) { toast.error("Add at least one creation event"); return; }
+    if (!jurisdictions.length) { toast.error("Select at least one jurisdiction"); return; }
+    setBusy(true);
+    try {
+      const data = await api.analyze(work.id, jurisdictions);
+      setAnalysis(data);
+      setStep("analysis");
+      toast.success(`Analysis complete — ${data.results.length} conclusions across ${data.jurisdictions.length} jurisdictions.`);
+    } catch (e) {
+      toast.error(e?.response?.data?.detail || "Analysis failed");
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-[#07090e] text-slate-100 flex">
+      <WorkflowSidebar activeStep={step} completed={completed} onNavigate={setStep} />
+
+      <main className="flex-1 overflow-x-hidden">
+        <TopBar work={work} step={step} isDemo={isDemo} />
+
+        <div className="max-w-6xl mx-auto px-8 py-10 uc-line-bg">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={step}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.25 }}
+            >
+              {step === "type" && (
+                <WorkTypeSelector onPick={onPickType} busy={busy} />
+              )}
+              {step === "upload" && (
+                <MaterialUpload
+                  work={work}
+                  files={files}
+                  onUploaded={(f) => setFiles((prev) => [...prev, f])}
+                  onNext={() => setStep("history")}
+                />
+              )}
+              {step === "history" && (
+                <CreationTimeline
+                  work={work}
+                  events={events}
+                  files={files}
+                  onSave={saveEvents}
+                  onNext={() => setStep("contribution")}
+                  readOnly={isDemo}
+                />
+              )}
+              {step === "contribution" && (
+                <ContributionMap events={events} onNext={() => setStep("jurisdiction")} />
+              )}
+              {step === "jurisdiction" && (
+                <JurisdictionEngine
+                  selected={jurisdictions}
+                  onChange={setJurisdictions}
+                  onNext={runAnalysis}
+                  busy={busy}
+                />
+              )}
+              {step === "analysis" && (
+                <LegalAnalysisView analysis={analysis} onNext={() => setStep("matrix")} />
+              )}
+              {step === "matrix" && (
+                <ComparativeClaimMatrix analysis={analysis} onNext={() => setStep("evidence")} />
+              )}
+              {step === "evidence" && (
+                <EvidenceMap analysis={analysis} files={files} onNext={() => setStep("review")} />
+              )}
+              {step === "review" && (
+                <LawyerReview analysis={analysis} work={work} events={events} jurisdictions={jurisdictions} />
+              )}
+            </motion.div>
+          </AnimatePresence>
+        </div>
+      </main>
+    </div>
+  );
+}
+
+function TopBar({ work, step, isDemo }) {
+  return (
+    <div className="border-b border-white/5 bg-[#0a0d15]/80 backdrop-blur uc-no-print sticky top-0 z-20">
+      <div className="max-w-6xl mx-auto px-8 py-4 flex items-center justify-between">
+        <div className="flex items-center gap-3 text-sm">
+          <span className="uc-label">Workspace</span>
+          <ChevronRight className="w-3 h-3 text-slate-600" />
+          <span className="font-mono text-slate-300">{work?.title || "New analysis"}</span>
+          {work?.work_type && (
+            <span className="uc-cite">{work.work_type.toUpperCase()}</span>
+          )}
+          {isDemo && (
+            <span className="ml-2 px-2 py-0.5 text-[0.65rem] font-mono uppercase tracking-widest rounded border border-amber-500/40 text-amber-400 bg-amber-500/5">
+              Sample · Sarah
+            </span>
+          )}
+        </div>
+        <div className="uc-label">{step}</div>
+      </div>
+    </div>
+  );
+}

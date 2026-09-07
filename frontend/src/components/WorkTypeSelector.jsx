@@ -1,0 +1,62 @@
+import { FileText, ImageIcon, ArrowRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
+
+const OPTIONS = [
+  {
+    key: "Written", icon: FileText, testid: "work-type-written-card",
+    title: "Written Work",
+    body: "Essays, articles, books, manuscripts, reports and other written outputs where AI may have generated prose, alternatives, or edits.",
+    examples: ["Novellas & short fiction", "Long-form articles & essays", "Reports & memoranda", "Book chapters"],
+  },
+  {
+    key: "Visual", icon: ImageIcon, testid: "work-type-visual-card",
+    title: "Visual Artwork",
+    body: "Illustrations, digital artwork, concept art, graphics — cases involving generative image models, human sketching, selection, and repainting.",
+    examples: ["Cover artwork & illustrations", "Concept & character art", "Graphic design & posters", "Editorial illustrations"],
+  },
+];
+
+export default function WorkTypeSelector({ onPick, busy }) {
+  return (
+    <div>
+      <div className="uc-label mb-3">01 · Work type & scope</div>
+      <h1 className="font-display text-4xl sm:text-5xl font-black tracking-tight mb-3" data-testid="workspace-step-title">
+        What are you analysing?
+      </h1>
+      <p className="text-slate-400 max-w-2xl mb-10">
+        UnCopyright's MVP supports two work types. The choice determines which authorities and legal tests the engine applies for each jurisdiction.
+      </p>
+
+      <div className="grid md:grid-cols-2 gap-5">
+        {OPTIONS.map((o) => (
+          <button
+            key={o.key}
+            data-testid={o.testid}
+            onClick={() => onPick(o.key)}
+            disabled={busy}
+            className="uc-card uc-card-hover uc-ticks p-8 text-left group transition-all disabled:opacity-50"
+          >
+            <span className="tl" /><span className="br" />
+            <div className="flex items-start justify-between mb-6">
+              <div className="w-11 h-11 rounded bg-amber-500/10 border border-amber-500/30 flex items-center justify-center">
+                <o.icon className="w-5 h-5 text-amber-500" />
+              </div>
+              <ArrowRight className="w-5 h-5 text-slate-600 group-hover:text-amber-500 group-hover:translate-x-1 transition-all" />
+            </div>
+            <div className="uc-label mb-2">MVP · Fully supported</div>
+            <h3 className="font-display text-2xl font-bold mb-3">{o.title}</h3>
+            <p className="text-sm text-slate-400 leading-relaxed mb-6">{o.body}</p>
+            <ul className="space-y-1.5">
+              {o.examples.map((ex) => (
+                <li key={ex} className="text-xs font-mono text-slate-500 flex items-center gap-2">
+                  <span className="w-1 h-1 rounded-full bg-amber-500" />
+                  {ex}
+                </li>
+              ))}
+            </ul>
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}

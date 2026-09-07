@@ -1,0 +1,294 @@
+{
+  "project_name": "UnCopyright",
+  "tagline": "From AI Creation History to a Defensible Copyright Claim",
+  "design_system": {
+    "archetype": "ARCHETYPE 4: SWISS & HIGH-CONTRAST / ARCHETYPE 5: FORENSIC EDITORIAL",
+    "theme_preference": "Dual-mode with high-clarity Slate Noir Default (#090D14 and #0F172A) and Crisp Parchment Light (#F8FAFC / #F1F5F9). Strict avoid of generic purple gradients or AI chatbot bubbles.",
+    "typography": {
+      "headline_font": "Outfit, Clash Display, Cinzel, or Cabinet Grotesk (Editorial Authority & High-Stakes Legal Tension)",
+      "body_font": "IBM Plex Sans, Inter (with enhanced letter-spacing), or Source Sans Pro",
+      "mono_font": "JetBrains Mono, Roboto Mono (for event timestamps, prompt logs, rule citations, statute IDs)",
+      "hierarchy": {
+        "h1": "text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-none",
+        "h2": "text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight leading-tight",
+        "h3": "text-xl sm:text-2xl font-semibold tracking-tight",
+        "h4": "text-lg sm:text-xl font-medium",
+        "body": "text-sm sm:text-base leading-relaxed text-muted-foreground",
+        "label": "text-xs font-mono uppercase tracking-[0.2em] font-semibold text-slate-400",
+        "statute_cite": "text-xs font-mono font-medium px-2 py-0.5 rounded bg-slate-800 text-amber-300 border border-amber-500/20"
+      }
+    },
+    "colors": {
+      "palette": {
+        "background_dark": "#07090E",
+        "surface_dark": "#0D111A",
+        "surface_card_dark": "#131926",
+        "surface_card_border_dark": "rgba(255, 255, 255, 0.08)",
+        "accent_gold": "#D97706",
+        "accent_gold_glow": "#F59E0B",
+        "claim_green": "#10B981",
+        "claim_green_bg": "rgba(16, 185, 129, 0.12)",
+        "claim_green_border": "rgba(16, 185, 129, 0.3)",
+        "claim_orange": "#F59E0B",
+        "claim_orange_bg": "rgba(245, 158, 11, 0.12)",
+        "claim_orange_border": "rgba(245, 158, 11, 0.3)",
+        "claim_red": "#EF4444",
+        "claim_red_bg": "rgba(239, 68, 68, 0.12)",
+        "claim_red_border": "rgba(239, 68, 68, 0.3)",
+        "human_badge": "#3B82F6",
+        "ai_badge": "#8B5CF6",
+        "hybrid_badge": "#EC4899"
+      },
+      "status_coding": {
+        "POTENTIALLY_CLAIMABLE": {
+          "label": "Potentially Claimable",
+          "color": "#10B981",
+          "badge_class": "bg-emerald-500/15 text-emerald-400 border border-emerald-500/30",
+          "dot": "bg-emerald-500"
+        },
+        "UNCERTAIN": {
+          "label": "Uncertain / Requires Clarification",
+          "color": "#F59E0B",
+          "badge_class": "bg-amber-500/15 text-amber-400 border border-amber-500/30",
+          "dot": "bg-amber-500"
+        },
+        "EXCLUDE": {
+          "label": "Exclude from Claim",
+          "color": "#EF4444",
+          "badge_class": "bg-rose-500/15 text-rose-400 border border-rose-500/30",
+          "dot": "bg-rose-500"
+        }
+      }
+    },
+    "visual_enhancers": {
+      "borders": "1px crisp hairline borders (border-white/10 or border-slate-700/60) with subtle corner rivets or technical corner ticks",
+      "glassmorphism": "backdrop-blur-xl bg-slate-950/80 border border-white/10 shadow-2xl",
+      "grid_patterns": "Technical dot-matrix or blueprint line grid subtle background pattern",
+      "micro_indicators": "Actor tags [HUMAN: AUTHOR], [AI: MIDJOURNEY V6], [AI: CLAUDE 3.5 SONNET], [HYBRID: ITERATIVE REFINEMENT]",
+      "no_chat_bubbles": "Analysis presented strictly as structured legal syllogism (FACT -> RULE -> AUTHORITY -> APPLICATION -> CONCLUSION) and Evidence Chain matrices"
+    }
+  },
+  "workflow_architecture": {
+    "central_flow": [
+      "1. AI-ASSISTED WORK UPLOAD & TYPE (Written vs Visual)",
+      "2. CREATION HISTORY RECONSTRUCTION (Chronological event timeline with Actor Tags)",
+      "3. CREATION EVENTS DECOMPOSITION (Modality, Prompts, Direct Manual Edits, Iteration Steps)",
+      "4. HUMAN/AI CONTRIBUTION MAPPING (Qualitative Contribution Bars per component - NO % percentages)",
+      "5. JURISDICTION SELECTION (India - Indian Copyright Act 1957, US - USCO Compendium & Thaler/Kashtanova doctrine, UK - CDPA 1988 s.9(3) Computer-Generated Works)",
+      "6. LEGAL ISSUES & SYLLOGISM (Fact -> Rule -> Authority -> Application -> Conclusion)",
+      "7. CLAIM MAP MATRIX (Comparative color-coded 🟢🟠🔴 claim matrix across selected jurisdictions)",
+      "8. EVIDENCE MAP & AUDIT TRAIL (Direct linkage from claim assertions to uploaded artifact hash & timestamps)",
+      "9. EVIDENCE GAPS & PRESERVATION (Forensic warnings on prompt logs, intermediate seed files, raw revision records)",
+      "10. LAWYER REVIEW DOSSIER & DEFENSE BRIEF EXPORT (Print/PDF ready formal memo format)"
+    ],
+    "sample_case_study": {
+      "id": "sarah_sample_written",
+      "title": "Sarah Chen's Sci-Fi Novella: 'The Silicon Diaspora'",
+      "work_type": "written",
+      "description": "A 28,000-word speculative fiction novella created with an iterative human-AI workflow. Sarah generated character seeds and environmental descriptions using Claude 3.5 Sonnet, heavily rewrote every scene (3 drafts), introduced novel plot twists, structured the 5-act narrative arc manually, and hand-crafted all dialogue and thematic motifs.",
+      "components": [
+        {
+          "name": "Overarching Narrative Structure & 5-Act Plot Arc",
+          "actor": "HUMAN",
+          "qualitative_contribution": "Substantial Human Origin",
+          "qualitative_level": "very_high_human",
+          "jurisdiction_status": {
+            "us": "POTENTIALLY_CLAIMABLE",
+            "in": "POTENTIALLY_CLAIMABLE",
+            "uk": "POTENTIALLY_CLAIMABLE"
+          },
+          "fact": "Sarah manually drafted an 8-page master beat sheet, created character backstories before any AI generation, and reorganized all AI scene suggestions into an original non-linear timeline.",
+          "rule": "Selection, coordination, and arrangement of unprotected elements can sustain copyright if done by human author.",
+          "authority": "US: Feist v. Rural (1991); USCO Guidance on Works Containing AI (2023); IN: Eastern Book Co. v. D.B. Modak (2008) 'Modicum of Creativity'; UK: Walter v. Lane / Ladbroke v. William Hill",
+          "application": "The master plot architecture originated 100% from Sarah's intellect. AI did not devise the overarching story structure.",
+          "conclusion": "Potentially Claimable in all 3 jurisdictions."
+        },
+        {
+          "name": "Raw AI Scene Drafts & Background Worldbuilding Passages",
+          "actor": "AI",
+          "qualitative_contribution": "Predominantly AI-Generated Output",
+          "qualitative_level": "high_ai",
+          "jurisdiction_status": {
+            "us": "EXCLUDE",
+            "in": "EXCLUDE",
+            "uk": "UNCERTAIN"
+          },
+          "fact": "Raw paragraphs generated in Claude 3.5 Sonnet describing the atmospheric conditions of the colony planet Kepler-452b were taken without line-by-line stylistic alteration in Chapter 2.",
+          "rule": "US: Works created purely by non-human machines lack statutory authorship (Thaler v. Perlmutter 2023). IN: Author must be a natural person under Sec 2(d). UK: CDPA s.9(3) grants authorship to the person who made the arrangements necessary for the creation of computer-generated work, but ownership threshold remains untested for standard prompting.",
+          "authority": "USCO Zarya of the Dawn Decision (2023); Stephen Thaler v. Shira Perlmutter (D.D.C. 2023); UK CDPA 1988 s.9(3)",
+          "application": "Under US and Indian law, unmodified passages must be explicitly disclaimed in registration filing. Under UK law, prompt-maker argument exists but carries litigation risk.",
+          "conclusion": "Disclaim in US/India; Flag as Uncertain in UK."
+        },
+        {
+          "name": "Character Dialogue & Emotional Conflicts",
+          "actor": "HYBRID",
+          "qualitative_contribution": "Iterative Human Rewriting & Polishing",
+          "qualitative_level": "substantial_human_refinement",
+          "jurisdiction_status": {
+            "us": "POTENTIALLY_CLAIMABLE",
+            "in": "POTENTIALLY_CLAIMABLE",
+            "uk": "POTENTIALLY_CLAIMABLE"
+          },
+          "fact": "AI provided rudimentary dialogue suggestions. Sarah discarded 75% of lines, rewrote cadence, added dialect markers, and injected psychological subtext over 4 manual edit passes.",
+          "rule": "Human transformative modification and stylistic rewriting imparts requisite original human expression to derivative or mixed passages.",
+          "authority": "US: 17 U.S.C. § 101, 103; IN: R.G. Anand v. Delux Films (1978); UK: Designers Guild v. Russell Williams",
+          "application": "The final expressive phrasing, cadence, and subtext constitute independent human intellectual creation.",
+          "conclusion": "Potentially Claimable as human expressive contribution."
+        },
+        {
+          "name": "Visual Cover Art & Concept Illustrations",
+          "actor": "AI",
+          "qualitative_contribution": "AI-Generated from Text Prompts with Minor Color Grading",
+          "qualitative_level": "high_ai_minimal_human",
+          "jurisdiction_status": {
+            "us": "EXCLUDE",
+            "in": "EXCLUDE",
+            "uk": "UNCERTAIN"
+          },
+          "fact": "Cover was generated via Midjourney v6 with prompt 'cyberpunk archivist in decaying neon library'. Sarah only cropped and applied an Instagram-style contrast filter.",
+          "rule": "Prompts alone do not constitute human authorship over generated visual pixels (USCO Kashtanova / Allen Théâtre D'opéra Spatial rulings).",
+          "authority": "US Copyright Office Board of Review: 'Théâtre D’opéra Spatial' (Sept 2023); Kashtanova 'Zarya of the Dawn' (Feb 2023)",
+          "application": "Prompting acts as commissioning rather than direct execution of pictorial expression. Minor cropping fails the modicum of human creativity test.",
+          "conclusion": "Exclude visual cover image from claim in US & India; disclaim on Form TX / VA."
+        }
+      ]
+    }
+  },
+  "key_screens_and_components": {
+    "1_Landing_Hero": {
+      "path": "src/components/LandingHero.js",
+      "purpose": "Authoritative entrance highlighting platform value, interactive Sample Analysis demo switcher, jurisdiction badges, and key differentiators (No Chatbots, No Percentages, Pure Legal Traceability).",
+      "elements": [
+        "Brand Logo: 'UnCopyright' with Shield + Document Monogram",
+        "Tagline: 'From AI Creation History to a Defensible Copyright Claim'",
+        "Jurisdiction Pills: [🇮🇳 India - Copyright Act 1957] [🇺🇸 US - USCO Compendium] [🇬🇧 UK - CDPA 1988 s.9(3)]",
+        "Dual Primary CTA: 'Launch Evidence Workspace' & 'Inspect Sarah Sample (Novella Case)'",
+        "Interactive Quick-Preview: 3-column Legal Syllogism preview banner"
+      ]
+    },
+    "2_Workflow_Nav_Sidebar": {
+      "path": "src/components/WorkflowSidebar.js",
+      "purpose": "High-density legal workflow stepper and quick navigation bar tracking forensic analysis status.",
+      "steps": [
+        "1. Work Type & Scope",
+        "2. Evidence Ingestion",
+        "3. Creation History",
+        "4. Contribution Map",
+        "5. Jurisdiction Engine",
+        "6. Legal Syllogism",
+        "7. Claim Matrix",
+        "8. Evidence Audit & Gaps",
+        "9. Lawyer Review & PDF"
+      ]
+    },
+    "3_Work_Type_Selector": {
+      "path": "src/components/WorkTypeSelector.js",
+      "purpose": "Select between Written Works (Novellas, Screenplays, Code, Articles) and Visual Artwork (Concept Art, UI Design, Illustrations, Comics) with custom legal scope definitions."
+    },
+    "4_Creation_Material_Upload": {
+      "path": "src/components/MaterialUpload.js",
+      "purpose": "Multi-category evidence ingestion: Final Work (Required), Early Drafts / Beat Sheets, AI Raw Prompt Logs, AI Unmodified Outputs, Version Control / Edit Logs, Audio / Scribbles.",
+      "features": [
+        "Drag & Drop upload with File Hash & Timestamp metadata simulation",
+        "Pre-loaded Sarah Sample data loader for 1-click testing",
+        "Evidence tagging system"
+      ]
+    },
+    "5_Creation_Timeline": {
+      "path": "src/components/CreationTimeline.js",
+      "purpose": "Chronological audit timeline of creation events. Shows numbered events, timestamps, actor pills ([HUMAN], [AI], [HYBRID]), input artifacts, and output diffs."
+    },
+    "6_Contribution_Map": {
+      "path": "src/components/ContributionMap.js",
+      "purpose": "CRITICAL RULE COMPLIANCE: Qualitative Contribution Bars per component (NO deceptive % percentages). Uses descriptive bands: 'Independent Human Origin', 'Substantial Human Refinement', 'Guided Human Selection', 'Predominantly AI-Generated'.",
+      "features": [
+        "Interactive breakdown of textual/visual components",
+        "Actor attribution badge",
+        "Detailed human creative exertion log",
+        "Direct toggle to see evidence supporting this attribution"
+      ]
+    },
+    "7_Jurisdiction_Engine": {
+      "path": "src/components/JurisdictionEngine.js",
+      "purpose": "Multi-select checkboxes for India, US, and UK with dynamic jurisdictional rule breakdown cards citing exact statutes and seminal precedents."
+    },
+    "8_Legal_Analysis_Syllogism": {
+      "path": "src/components/LegalAnalysisView.js",
+      "purpose": "Rigorous 5-tier legal breakdown for each legal issue × jurisdiction: [FACT] -> [RULE] -> [AUTHORITATIVE SOURCE] -> [APPLICATION] -> [CONCLUSION]. Includes claim position badge (🟢 POTENTIALLY_CLAIMABLE / 🟠 UNCERTAIN / 🔴 EXCLUDE)."
+    },
+    "9_Comparative_Claim_Matrix": {
+      "path": "src/components/ComparativeClaimMatrix.js",
+      "purpose": "High-density comparison matrix displaying all work components as rows and selected jurisdictions as columns with color-coded status badges, disclaim recommendation, and drill-down explanation."
+    },
+    "10_Evidence_Map_And_Gaps": {
+      "path": "src/components/EvidenceMap.js",
+      "purpose": "Two-pane forensic view: Left pane shows Claim Assertions linked to File Artifacts; Right pane highlights Evidence Gaps (missing prompt logs, intermediate drafts) and actionable preservation checklists for lawyers."
+    },
+    "11_Lawyer_Review_And_Export": {
+      "path": "src/components/LawyerReviewModal.js",
+      "purpose": "Formal copyright registration defense memorandum, attorney disclaimer notes, disclaimer text generator for USCO Form TX/VA and Indian Copyright Office Form XIV, and interactive PDF/Print export."
+    }
+  },
+  "image_urls": {
+    "hero_legal_forensic": {
+      "url": "https://images.unsplash.com/photo-1444427169197-de497742b62d?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1NzZ8MHwxfHNlYXJjaHw0fHxsZWdhbCUyMGRvY3VtZW50JTIwZm9yZW5zaWMlMjBhbmFseXNpc3xlbnwwfHx8fDE3ODg3OTQzMTR8MA&ixlib=rb-4.1.0&q=85",
+      "description": "Black-framed reading glasses resting on formal legal deposition and forensic evidentiary papers - clean, high-precision legal atmosphere",
+      "placement": "Landing page background accent / evidentiary hero banner"
+    },
+    "writer_craft_manuscript": {
+      "url": "https://images.unsplash.com/photo-1586943759341-be5595944989?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA0MTJ8MHwxfHNlYXJjaHwyfHx3cml0ZXIlMjB0eXBpbmclMjBtYW51c2NyaXB0JTIwY3JlYXRpdmUlMjBwcm9jZXNzfGVufDB8fHx8MTc4ODc5NDMxNHww&ixlib=rb-4.1.0&q=85",
+      "description": "Green vintage Olympia typewriter with manuscript paper reading Write something on marble desk - human origin & creative struggle",
+      "placement": "Written Works selection card & Sarah Chen Case Study banner"
+    },
+    "visual_studio_process": {
+      "url": "https://images.unsplash.com/photo-1510442650500-93217e634e4c?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA0MTJ8MHwxfHNlYXJjaHwxfHx3cml0ZXIlMjB0eXBpbmclMjBtYW51c2NyaXB0JTIwY3JlYXRpdmUlMjBwcm9jZXNzfGVufDB8fHx8MTc4ODc5NDMxNHww&ixlib=rb-4.1.0&q=85",
+      "description": "Author hands typing actively on manual mechanical keys - tangible human expression",
+      "placement": "Creation history timeline header and evidence verification section"
+    }
+  },
+  "testing_attributes": {
+    "rule": "Every button, input, tab, card, badge, and interactive modal must include a deterministic kebab-case data-testid attribute.",
+    "key_test_ids": [
+      "landing-hero-title",
+      "btn-launch-workspace",
+      "btn-load-sarah-sample",
+      "work-type-written-card",
+      "work-type-visual-card",
+      "upload-final-work-input",
+      "upload-drafts-input",
+      "upload-prompts-input",
+      "upload-history-input",
+      "timeline-event-item-1",
+      "actor-badge-human",
+      "actor-badge-ai",
+      "contribution-bar-plot",
+      "contribution-bar-dialogue",
+      "jurisdiction-checkbox-india",
+      "jurisdiction-checkbox-us",
+      "jurisdiction-checkbox-uk",
+      "legal-syllogism-fact-box",
+      "legal-syllogism-rule-box",
+      "legal-syllogism-authority-box",
+      "legal-syllogism-application-box",
+      "legal-syllogism-conclusion-badge",
+      "claim-matrix-table",
+      "claim-status-dot-green",
+      "claim-status-dot-orange",
+      "claim-status-dot-red",
+      "evidence-map-link-btn",
+      "evidence-gap-item",
+      "btn-lawyer-review",
+      "btn-export-pdf-dossier"
+    ]
+  },
+  "instructions_to_main_agent": [
+    "Build a production-grade React SPA with an uncompromising 'Legal Evidence Workspace' aesthetic reminiscent of Linear, Palantir Gotham, and high-end editorial law platforms.",
+    "Strictly avoid generic chatbot UIs (NO speech bubbles, NO 'AI says' banter). All analysis must follow formal legal syllogism (FACT -> RULE -> AUTHORITY -> APPLICATION -> CONCLUSION).",
+    "Ensure the Contribution Map uses qualitative descriptors (e.g., 'Substantial Human Refinement', 'Independent Human Origin', 'Predominantly AI') and NEVER renders deceptive fake percentage meters (e.g., NO '72% Human / 28% AI').",
+    "Provide a fully interactive Sarah Chen sample case study ('The Silicon Diaspora') with preloaded evidence files, 5 creation timeline events, 4 decomposed components, 3-jurisdiction legal analyses, and claim matrices.",
+    "Allow users to also start a fresh workspace, switch between Written Works and Visual Artwork, toggle jurisdictions (India / US / UK), edit/add creation events, and trigger forensic re-analysis.",
+    "Implement the full Claim Map Matrix with clear 🟢 (POTENTIALLY_CLAIMABLE), 🟠 (UNCERTAIN), and 🔴 (EXCLUDE) color coding and detailed jurisdictional justification popups.",
+    "Include an Evidence Map showing file hash verification, traceability drill-downs ('Why this conclusion?'), and an Evidence Gap detector providing actionable preservation advice for copyright registration.",
+    "Implement an attorney-grade Lawyer Review Dossier & Registration Defense Memo with Print/PDF export preview, generated USCO/Indian Copyright disclaimers, and statutory citation index."
+  ]
+}

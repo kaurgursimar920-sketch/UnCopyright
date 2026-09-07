@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
 import { ArrowRight, AlertTriangle, Link2 } from "lucide-react";
 import { ISSUE_LABEL } from "@/lib/api";
 
@@ -16,11 +17,18 @@ export default function EvidenceMap({ analysis, onNext }) {
       </p>
 
       <div className="grid lg:grid-cols-2 gap-6">
-        <div>
+        <motion.div initial={{ opacity: 0, x: -16 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>
           <h2 className="uc-label mb-3">Claim → Evidence</h2>
           <div className="space-y-3">
-            {analysis.results.map((r) => (
-              <div key={r.analysis_id} className="uc-card p-4" data-testid="evidence-map-link-btn">
+            {analysis.results.map((r, i) => (
+              <motion.div
+                key={r.analysis_id}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.05 + i * 0.04, duration: 0.35 }}
+                className="uc-card p-4"
+                data-testid="evidence-map-link-btn"
+              >
                 <div className="flex items-start gap-2 mb-2">
                   <Link2 className="w-3.5 h-3.5 text-amber-500 mt-1 shrink-0" />
                   <div className="flex-1">
@@ -33,18 +41,25 @@ export default function EvidenceMap({ analysis, onNext }) {
                     <span key={f} className="uc-cite">{f}</span>
                   )) : <span className="text-xs text-rose-400 font-mono">no artefacts</span>}
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
-        </div>
+        </motion.div>
 
-        <div>
+        <motion.div initial={{ opacity: 0, x: 16 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.12 }}>
           <h2 className="uc-label mb-3">Evidence gaps ({gaps.length})</h2>
           <div className="space-y-3">
             {gaps.length === 0 ? (
               <div className="uc-card p-4 text-sm text-slate-400">No gaps identified on the current record.</div>
-            ) : gaps.map((r) => (
-              <div key={r.analysis_id} className="uc-card p-4 border-l-2 border-l-amber-500" data-testid="evidence-gap-item">
+            ) : gaps.map((r, i) => (
+              <motion.div
+                key={r.analysis_id}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.15 + i * 0.05, duration: 0.35 }}
+                className="uc-card p-4 border-l-2 border-l-amber-500"
+                data-testid="evidence-gap-item"
+              >
                 <div className="flex items-start gap-2">
                   <AlertTriangle className="w-4 h-4 text-amber-500 mt-0.5 shrink-0" />
                   <div className="flex-1">
@@ -57,10 +72,10 @@ export default function EvidenceMap({ analysis, onNext }) {
                     </div>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
-        </div>
+        </motion.div>
       </div>
 
       <div className="mt-10">

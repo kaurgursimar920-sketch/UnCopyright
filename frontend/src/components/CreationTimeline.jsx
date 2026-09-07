@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { Plus, Trash2, ArrowRight, User, Bot, Combine } from "lucide-react";
+import { motion } from "framer-motion";
+import { Plus, Trash2, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { ACTOR_STYLES, ISSUE_LABEL } from "@/lib/api";
+import { ISSUE_LABEL } from "@/lib/api";
 
 const ISSUES = ["AI_GENERATED_MATERIAL", "HUMAN_CONTRIBUTION", "SELECTION_ARRANGEMENT", "HUMAN_MODIFICATION"];
 
@@ -53,9 +54,24 @@ export default function CreationTimeline({ work, events, onSave, onNext, readOnl
         Each event captures what happened, who did it, and which legal issues it triggers. A single event can carry multiple issues.
       </p>
 
-      <div className="space-y-4 mb-6" data-testid="timeline-events">
+      <div className="relative space-y-4 mb-6" data-testid="timeline-events">
+        {items.length > 1 && (
+          <motion.div
+            initial={{ scaleY: 0 }}
+            animate={{ scaleY: 1 }}
+            transition={{ duration: 0.9, ease: "easeOut", delay: 0.2 }}
+            className="absolute left-[27px] top-8 bottom-8 w-px bg-gradient-to-b from-amber-500/60 via-amber-500/20 to-transparent origin-top pointer-events-none"
+          />
+        )}
         {items.map((ev, i) => (
-          <div key={ev.creation_event_id || i} className="uc-card p-5 uc-ticks" data-testid={`timeline-event-${ev.creation_event_id}`}>
+          <motion.div
+            key={ev.creation_event_id || i}
+            initial={{ opacity: 0, x: -18 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.45, delay: i * 0.09, ease: [0.22, 1, 0.36, 1] }}
+            className="uc-card p-5 uc-ticks"
+            data-testid={`timeline-event-${ev.creation_event_id}`}
+          >
             <span className="tl" /><span className="br" />
             <div className="flex items-start gap-5">
               <div className="shrink-0 w-14 flex flex-col items-center">
@@ -138,7 +154,7 @@ export default function CreationTimeline({ work, events, onSave, onNext, readOnl
                 </button>
               )}
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
 

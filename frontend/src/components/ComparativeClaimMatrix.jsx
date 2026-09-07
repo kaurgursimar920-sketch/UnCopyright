@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { POSITION_STYLES, ISSUE_LABEL, JURI_META } from "@/lib/api";
 
@@ -25,27 +26,40 @@ export default function ComparativeClaimMatrix({ analysis, onNext }) {
             </div>
           ))}
         </div>
-        {rows.map((row) => (
-          <div key={`${row.creation_event_id}-${row.issue}`} className="grid px-5 py-4 border-b border-white/5 last:border-0 items-center" style={{ gridTemplateColumns: `2fr 3fr repeat(${juri.length}, 1fr)` }}>
+        {rows.map((row, r) => (
+          <motion.div
+            key={`${row.creation_event_id}-${row.issue}`}
+            initial={{ opacity: 0, x: -14 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.4, delay: r * 0.07 }}
+            className="grid px-5 py-4 border-b border-white/5 last:border-0 items-center"
+            style={{ gridTemplateColumns: `2fr 3fr repeat(${juri.length}, 1fr)` }}
+          >
             <div className="text-sm">
               <div className="font-mono text-amber-500 font-bold">EV {String(row.event_sequence).padStart(2, "0")}</div>
               <div className="text-slate-400 text-xs mt-0.5 line-clamp-2">{row.event_description}</div>
             </div>
             <div className="text-sm text-slate-200">{ISSUE_LABEL[row.issue]}</div>
-            {juri.map((j) => {
+            {juri.map((j, c) => {
               const pos = row.positions[j];
               const s = pos && POSITION_STYLES[pos];
               if (!s) return <div key={j} className="text-slate-700 text-xs">—</div>;
               return (
                 <div key={j}>
-                  <span className={`inline-flex items-center gap-1.5 px-2 py-1 rounded text-[0.65rem] font-mono border ${s.badge}`} data-testid={`claim-status-dot-${pos === "POTENTIALLY_CLAIMABLE" ? "green" : pos === "UNCERTAIN" ? "orange" : "red"}`}>
+                  <motion.span
+                    initial={{ scale: 0.5, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ delay: 0.2 + r * 0.07 + c * 0.1, type: "spring", stiffness: 320, damping: 16 }}
+                    className={`inline-flex items-center gap-1.5 px-2 py-1 rounded text-[0.65rem] font-mono border ${s.badge}`}
+                    data-testid={`claim-status-dot-${pos === "POTENTIALLY_CLAIMABLE" ? "green" : pos === "UNCERTAIN" ? "orange" : "red"}`}
+                  >
                     <span className={`w-1.5 h-1.5 rounded-full ${s.dot}`} />
                     {pos === "POTENTIALLY_CLAIMABLE" ? "CLAIM" : pos === "UNCERTAIN" ? "UNCERTAIN" : "EXCLUDE"}
-                  </span>
+                  </motion.span>
                 </div>
               );
             })}
-          </div>
+          </motion.div>
         ))}
       </div>
 

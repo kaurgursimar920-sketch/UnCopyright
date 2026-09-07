@@ -121,6 +121,64 @@ html, body, #root {
   body { @apply bg-background text-foreground; }
 }
 
+/* Cinematic motion layer */
+.uc-grain {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E");
+}
+
+@keyframes uc-breathe {
+  0%, 100% { opacity: 0.45; transform: scale(1); }
+  50% { opacity: 0.9; transform: scale(1.08); }
+}
+.uc-breathe { animation: uc-breathe 7s ease-in-out infinite; }
+
+@keyframes uc-drift {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-14px); }
+}
+.uc-drift { animation: uc-drift 9s ease-in-out infinite; }
+.uc-drift-slow { animation: uc-drift 13s ease-in-out infinite; }
+
+@keyframes uc-scanx {
+  0% { transform: translateX(-140%); }
+  100% { transform: translateX(520%); }
+}
+.uc-scanx { animation: uc-scanx 4.5s cubic-bezier(0.6, 0.05, 0.3, 0.95) infinite; }
+
+@keyframes uc-pulse-dot {
+  0%, 100% { opacity: 0.25; }
+  50% { opacity: 1; }
+}
+
+@keyframes uc-pulse-ring {
+  0% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.35); }
+  70% { box-shadow: 0 0 0 12px rgba(245, 158, 11, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); }
+}
+.uc-pulse { animation: uc-pulse-ring 2.6s ease-out infinite; }
+
+.uc-spot-target { position: relative; }
+.uc-spot-target::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(320px circle at var(--sx, 50%) var(--sy, 50%), rgba(245, 158, 11, 0.09), transparent 65%);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+}
+.uc-spot-target:hover::after { opacity: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .uc-breathe, .uc-drift, .uc-drift-slow, .uc-scanx, .uc-pulse { animation: none !important; }
+}
+
 @media print {
   body { background: white !important; color: black !important; }
   .uc-no-print { display: none !important; }

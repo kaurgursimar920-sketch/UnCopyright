@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import { motion } from "framer-motion";
 import { ArrowRight, Loader2, ExternalLink } from "lucide-react";
 import { JURI_META } from "@/lib/api";
 
@@ -35,14 +36,18 @@ export default function JurisdictionEngine({ selected, onChange, onNext, busy })
       </p>
 
       <div className="grid md:grid-cols-3 gap-4">
-        {JURISDICTIONS.map((j) => {
+        {JURISDICTIONS.map((j, ji) => {
           const meta = JURI_META[j.name];
           const on = selected.includes(j.name);
           return (
-            <label
+            <motion.label
               key={j.name}
               data-testid={`jurisdiction-checkbox-${meta.code.toLowerCase()}`}
-              className={`uc-card uc-card-hover p-5 cursor-pointer transition-all block ${on ? "border-amber-500/50 bg-amber-500/[0.03]" : ""}`}
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: ji * 0.12, duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+              whileHover={{ y: -4 }}
+              className={`uc-card uc-card-hover p-5 cursor-pointer block ${on ? "border-amber-500/50 bg-amber-500/[0.03] shadow-[0_0_28px_rgba(245,158,11,0.1)]" : ""}`}
             >
               <div className="flex items-start justify-between mb-3">
                 <div className="flex items-center gap-3">
@@ -52,13 +57,21 @@ export default function JurisdictionEngine({ selected, onChange, onNext, busy })
                     <div className="uc-label">{meta.code}</div>
                   </div>
                 </div>
-                <Checkbox checked={on} onCheckedChange={() => toggle(j.name)} className="border-white/20 data-[state=checked]:bg-amber-500 data-[state=checked]:border-amber-500 mt-1" />
+                <motion.span
+                  key={String(on)}
+                  initial={{ scale: 0.5 }}
+                  animate={{ scale: 1 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 15 }}
+                  className="mt-1 inline-flex"
+                >
+                  <Checkbox checked={on} onCheckedChange={() => toggle(j.name)} className="border-white/20 data-[state=checked]:bg-amber-500 data-[state=checked]:border-amber-500" />
+                </motion.span>
               </div>
               <p className="text-sm text-slate-400 leading-relaxed mb-3">{j.summary}</p>
               <a href={j.url} target="_blank" rel="noreferrer" onClick={(e) => e.stopPropagation()} className="text-xs font-mono text-amber-500 hover:underline inline-flex items-center gap-1">
                 Primary source <ExternalLink className="w-3 h-3" />
               </a>
-            </label>
+            </motion.label>
           );
         })}
       </div>

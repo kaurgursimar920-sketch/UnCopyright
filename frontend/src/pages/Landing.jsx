@@ -2,8 +2,8 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import {
-  ShieldCheck, FileSearch, ScrollText, ArrowUpRight, Scale, Fingerprint,
-  Layers, Milestone, BookOpen, ChevronRight,
+  ShieldCheck, FileSearch, ArrowUpRight, Scale, Fingerprint,
+  Milestone, ChevronRight,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { api } from "@/lib/api";
@@ -29,6 +29,38 @@ const PILLARS = [
     body: "Every fact links to the file that supports it. Missing artefacts surface as explicit evidence gaps with preservation guidance — no invented facts, ever.",
   },
 ];
+
+const CHIPS = [
+  { t: "EV-02 · AI · 10:17:00Z", cls: "top-[13%] right-[5%] uc-drift" },
+  { t: "CDPA 1988 · s.9(3)", cls: "top-[29%] right-[18%] uc-drift-slow" },
+  { t: "SELECTION_ARRANGEMENT", cls: "top-[46%] right-[4%] uc-drift" },
+  { t: "POTENTIALLY_CLAIMABLE", cls: "top-[62%] right-[15%] uc-drift-slow" },
+  { t: "s.2(d)(vi) · CA 1957", cls: "top-[78%] right-[7%] uc-drift" },
+];
+
+function Cascade({ text, base = 0, className = "" }) {
+  return (
+    <>
+      {text.split(" ").map((w, i) => (
+        <motion.span
+          key={`${w}-${i}`}
+          className={`inline-block mr-[0.28em] ${className}`}
+          initial={{ opacity: 0, y: 24, filter: "blur(6px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          transition={{ delay: base + i * 0.08, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+        >
+          {w}
+        </motion.span>
+      ))}
+    </>
+  );
+}
+
+function spot(e) {
+  const r = e.currentTarget.getBoundingClientRect();
+  e.currentTarget.style.setProperty("--sx", `${e.clientX - r.left}px`);
+  e.currentTarget.style.setProperty("--sy", `${e.clientY - r.top}px`);
+}
 
 export default function Landing() {
   const navigate = useNavigate();
@@ -58,6 +90,7 @@ export default function Landing() {
 
   return (
     <div className="min-h-screen bg-[#07090e] text-slate-100 uc-line-bg relative">
+      <div className="uc-grain" />
       {/* Nav */}
       <header className="border-b border-white/5 relative z-10">
         <div className="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
@@ -83,29 +116,60 @@ export default function Landing() {
       {/* Hero */}
       <section className="relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-6 pt-20 pb-16 relative z-10">
-          <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-            <div className="uc-label mb-6 flex items-center gap-3" data-testid="landing-hero-eyebrow">
-              <span className="inline-block w-8 h-px bg-amber-500" />
+          <div>
+            <motion.div
+              initial={{ opacity: 0, x: -16 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5 }}
+              className="uc-label mb-6 flex items-center gap-3"
+              data-testid="landing-hero-eyebrow"
+            >
+              <motion.span
+                initial={{ scaleX: 0 }}
+                animate={{ scaleX: 1 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="inline-block w-8 h-px bg-amber-500 origin-left"
+              />
               A Legal-Tech Analysis Platform · Not a Chatbot
-            </div>
+            </motion.div>
             <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl font-black leading-[0.95] tracking-tight max-w-5xl" data-testid="landing-hero-title">
-              From AI Creation History
+              <Cascade text="From AI Creation History" base={0.15} />
               <br />
-              to a <span className="text-amber-500">Defensible</span> Copyright Claim.
+              <Cascade text="to a" base={0.55} />
+              <motion.span
+                initial={{ opacity: 0, y: 26, filter: "blur(8px)" }}
+                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                transition={{ delay: 0.74, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                className="text-amber-500 inline-block mr-[0.28em]"
+              >
+                Defensible
+              </motion.span>
+              <Cascade text="Copyright Claim." base={0.88} />
             </h1>
-            <p className="mt-8 max-w-2xl text-lg text-slate-400 leading-relaxed" data-testid="landing-hero-subtitle">
+            <motion.p
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.05, duration: 0.6 }}
+              className="mt-8 max-w-2xl text-lg text-slate-400 leading-relaxed"
+              data-testid="landing-hero-subtitle"
+            >
               UnCopyright reconstructs how an AI-assisted work was actually created, separates human and AI
               contributions event-by-event, and applies the specific copyright rules of India, the United States
               and the United Kingdom — with every conclusion traced back to a statute, precedent, or the file on
               record.
-            </p>
+            </motion.p>
 
-            <div className="mt-10 flex flex-wrap gap-4">
+            <motion.div
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.2, duration: 0.6 }}
+              className="mt-10 flex flex-wrap gap-4"
+            >
               <Button
                 data-testid="btn-launch-workspace"
                 onClick={startFresh}
                 disabled={loading}
-                className="bg-amber-600 hover:bg-amber-500 text-black font-semibold h-12 px-6 rounded-md shadow-lg shadow-amber-900/40"
+                className="bg-amber-600 hover:bg-amber-500 text-black font-semibold h-12 px-6 rounded-md shadow-lg shadow-amber-900/40 uc-pulse"
               >
                 Launch Evidence Workspace
                 <ArrowUpRight className="w-4 h-4 ml-1.5" />
@@ -120,61 +184,124 @@ export default function Landing() {
                 <FileSearch className="w-4 h-4 mr-2" />
                 Inspect Sarah Sample — Visual Artwork
               </Button>
-            </div>
+            </motion.div>
 
             <div className="mt-14 flex flex-wrap gap-3" data-testid="jurisdiction-pills">
-              {JURI_PILLS.map((j) => (
-                <div key={j.code} className="uc-card px-4 py-2.5 flex items-center gap-2.5">
+              {JURI_PILLS.map((j, i) => (
+                <motion.div
+                  key={j.code}
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 1.35 + i * 0.12, duration: 0.5 }}
+                  onMouseMove={spot}
+                  className="uc-card uc-spot-target px-4 py-2.5 flex items-center gap-2.5"
+                >
                   <span className="text-xl">{j.flag}</span>
                   <div className="leading-tight">
                     <div className="text-xs font-mono text-slate-500">{j.code}</div>
                     <div className="text-sm text-slate-200">{j.law}</div>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
-          </motion.div>
+          </div>
         </div>
 
-        {/* Right-side quiet decoration */}
-        <div className="absolute top-24 right-0 w-[36rem] h-[36rem] rounded-full bg-amber-600/5 blur-[120px] pointer-events-none" />
+        {/* Ambient breathing glows */}
+        <div className="absolute top-24 right-0 w-[36rem] h-[36rem] rounded-full bg-amber-600/[0.07] blur-[130px] pointer-events-none uc-breathe" />
+        <div className="absolute -bottom-32 -left-24 w-[28rem] h-[28rem] rounded-full bg-blue-700/[0.05] blur-[130px] pointer-events-none uc-breathe" style={{ animationDelay: "2.5s" }} />
+
+        {/* Drifting forensic record chips */}
+        <div className="hidden lg:block absolute inset-0 pointer-events-none" aria-hidden>
+          {CHIPS.map((c) => (
+            <div
+              key={c.t}
+              className={`absolute ${c.cls} px-3 py-1.5 rounded border border-white/10 bg-white/[0.02] backdrop-blur-sm font-mono text-[0.62rem] tracking-[0.18em] text-slate-500`}
+            >
+              {c.t}
+            </div>
+          ))}
+        </div>
       </section>
 
       {/* Preview strip — the syllogism */}
-      <section className="border-y border-white/5 bg-slate-950/50">
+      <section className="border-y border-white/5 bg-slate-950/50 relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-6 py-10">
-          <div className="uc-label mb-5">Every conclusion follows one structure</div>
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-3 font-mono text-sm">
-            {["Fact", "Rule", "Authority", "Application", "Conclusion"].map((step, i) => (
-              <div key={step} className="uc-card px-4 py-4 uc-ticks flex items-center gap-3">
-                <span className="tl" /><span className="br" />
-                <span className="text-amber-500 font-bold">{String(i + 1).padStart(2, "0")}</span>
-                <span className="text-slate-200 font-semibold uppercase tracking-wider">{step}</span>
-              </div>
-            ))}
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="uc-label mb-5"
+          >
+            Every conclusion follows one structure
+          </motion.div>
+          <div className="relative">
+            <div className="grid grid-cols-1 md:grid-cols-5 gap-3 font-mono text-sm">
+              {["Fact", "Rule", "Authority", "Application", "Conclusion"].map((step, i) => (
+                <motion.div
+                  key={step}
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.12, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                  className="uc-card px-4 py-4 uc-ticks flex items-center gap-3"
+                >
+                  <span className="tl" /><span className="br" />
+                  <span className="text-amber-500 font-bold">{String(i + 1).padStart(2, "0")}</span>
+                  <span className="text-slate-200 font-semibold uppercase tracking-wider">{step}</span>
+                  <span
+                    className="ml-auto w-1.5 h-1.5 rounded-full bg-amber-500/70"
+                    style={{ animation: `uc-pulse-dot 2.2s ${i * 0.35}s infinite` }}
+                  />
+                </motion.div>
+              ))}
+            </div>
+            <div className="absolute inset-y-0 w-28 bg-gradient-to-r from-transparent via-amber-500/[0.08] to-transparent uc-scanx pointer-events-none hidden md:block" />
           </div>
         </div>
       </section>
 
       {/* Pillars */}
       <section id="workflow" className="max-w-7xl mx-auto px-6 py-20">
-        <h2 className="font-display text-3xl sm:text-4xl font-bold tracking-tight mb-3">Four layers, one workflow.</h2>
-        <p className="text-slate-400 max-w-2xl mb-12">Creation → Legal → Evidence → Claim. UnCopyright refuses to collapse them into a single "is this copyrighted?" answer.</p>
+        <motion.div
+          initial={{ opacity: 0, y: 18 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.55 }}
+        >
+          <h2 className="font-display text-3xl sm:text-4xl font-bold tracking-tight mb-3">Four layers, one workflow.</h2>
+          <p className="text-slate-400 max-w-2xl mb-12">Creation → Legal → Evidence → Claim. UnCopyright refuses to collapse them into a single "is this copyrighted?" answer.</p>
+        </motion.div>
         <div className="grid md:grid-cols-3 gap-6">
-          {PILLARS.map((p) => (
-            <div key={p.title} className="uc-card p-6 uc-ticks">
+          {PILLARS.map((p, i) => (
+            <motion.div
+              key={p.title}
+              initial={{ opacity: 0, y: 26 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ delay: i * 0.13, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+              onMouseMove={spot}
+              className="uc-card p-6 uc-ticks uc-spot-target transition-transform duration-300 hover:-translate-y-1.5"
+            >
               <span className="tl" /><span className="br" />
               <p.icon className="w-6 h-6 text-amber-500 mb-4" />
               <h3 className="font-display text-lg font-semibold mb-2">{p.title}</h3>
               <p className="text-sm text-slate-400 leading-relaxed">{p.body}</p>
-            </div>
+            </motion.div>
           ))}
         </div>
       </section>
 
       {/* Scope */}
       <section id="exclusions" className="border-t border-white/5 bg-slate-950/40">
-        <div className="max-w-7xl mx-auto px-6 py-16 grid md:grid-cols-2 gap-10">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.6 }}
+          className="max-w-7xl mx-auto px-6 py-16 grid md:grid-cols-2 gap-10"
+        >
           <div>
             <div className="uc-label mb-3">MVP scope</div>
             <h3 className="font-display text-2xl font-bold mb-6">What UnCopyright analyses</h3>
@@ -199,27 +326,45 @@ export default function Landing() {
               ))}
             </ul>
           </div>
-        </div>
+        </motion.div>
       </section>
 
       {/* Authorities strip */}
       <section id="authorities" className="max-w-7xl mx-auto px-6 py-16">
-        <div className="uc-label mb-3">Authority database</div>
-        <h3 className="font-display text-2xl font-bold mb-6">Grounded in primary legal sources</h3>
+        <motion.div
+          initial={{ opacity: 0, y: 18 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.55 }}
+        >
+          <div className="uc-label mb-3">Authority database</div>
+          <h3 className="font-display text-2xl font-bold mb-6">Grounded in primary legal sources</h3>
+        </motion.div>
         <div className="grid md:grid-cols-3 gap-4">
           {[
             { j: "India", ref: "Copyright Act, 1957 · s.2(d)(vi)", url: "https://copyright.gov.in/Copyright_Act_1957/chapter_i.html" },
             { j: "United States", ref: "USCO — Copyright and AI, Part 2: Copyrightability (2025)", url: "https://www.copyright.gov/ai/Copyright-and-Artificial-Intelligence-Part-2-Copyrightability-Report.pdf" },
             { j: "United Kingdom", ref: "CDPA 1988 · Sections 9(3) & 178", url: "https://www.legislation.gov.uk/ukpga/1988/48" },
-          ].map((s) => (
-            <a key={s.j} href={s.url} target="_blank" rel="noreferrer" className="uc-card uc-card-hover p-5 group block">
+          ].map((s, i) => (
+            <motion.a
+              key={s.j}
+              href={s.url}
+              target="_blank"
+              rel="noreferrer"
+              initial={{ opacity: 0, y: 18 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ delay: i * 0.1, duration: 0.5 }}
+              onMouseMove={spot}
+              className="uc-card uc-card-hover uc-spot-target p-5 group block"
+            >
               <div className="uc-label mb-2 flex items-center justify-between">
                 <span>{s.j}</span>
                 <ArrowUpRight className="w-3.5 h-3.5 text-amber-500 opacity-0 group-hover:opacity-100 transition-opacity" />
               </div>
               <div className="font-mono text-sm text-slate-300">{s.ref}</div>
               <div className="mt-3 text-xs text-slate-500">Last verified 7 September 2026 · Current Law</div>
-            </a>
+            </motion.a>
           ))}
         </div>
       </section>

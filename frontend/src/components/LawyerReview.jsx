@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
 import { Printer, Scale, ExternalLink } from "lucide-react";
 import { POSITION_STYLES, ISSUE_LABEL, JURI_META, ACTOR_STYLES } from "@/lib/api";
 
@@ -22,7 +23,12 @@ export default function LawyerReview({ analysis, work, events, jurisdictions }) 
         </Button>
       </div>
 
-      <div className="uc-card p-6 mb-6">
+      <motion.div
+        initial={{ opacity: 0, y: 18 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="uc-card p-6 mb-6"
+      >
         <h2 className="font-display text-xl font-bold mb-2 flex items-center gap-2"><Scale className="w-5 h-5 text-amber-500" /> Executive summary</h2>
         <p className="text-slate-300 leading-relaxed">
           This memorandum analyses <span className="text-amber-400">{events.length} creation event(s)</span> under
@@ -33,7 +39,7 @@ export default function LawyerReview({ analysis, work, events, jurisdictions }) 
         <p className="text-xs text-slate-500 mt-3 italic">
           This document is an analytical memorandum. It is not legal advice, does not constitute an attorney-client relationship, and does not effect any copyright registration or filing. Consult a qualified copyright lawyer for advice and filings.
         </p>
-      </div>
+      </motion.div>
 
       <Section title="1 · Creation history">
         {events.map((ev) => (
@@ -103,9 +109,15 @@ export default function LawyerReview({ analysis, work, events, jurisdictions }) 
 
 function Section({ title, children }) {
   return (
-    <div className="uc-card p-6 mb-6 uc-print-page">
+    <motion.div
+      initial={{ opacity: 0, y: 18 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-60px" }}
+      transition={{ duration: 0.5 }}
+      className="uc-card p-6 mb-6 uc-print-page"
+    >
       <h2 className="font-display text-xl font-bold mb-4 border-b border-white/5 pb-3">{title}</h2>
       {children}
-    </div>
+    </motion.div>
   );
 }

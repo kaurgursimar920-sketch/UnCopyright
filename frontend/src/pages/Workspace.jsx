@@ -3,6 +3,7 @@ import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "sonner";
 import WorkflowSidebar from "@/components/WorkflowSidebar";
+import AnalysisRunOverlay from "@/components/AnalysisRunOverlay";
 import WorkTypeSelector from "@/components/WorkTypeSelector";
 import MaterialUpload from "@/components/MaterialUpload";
 import CreationTimeline from "@/components/CreationTimeline";
@@ -30,6 +31,7 @@ export default function Workspace() {
   const [analysis, setAnalysis] = useState(null);
   const [step, setStep] = useState(workId ? "history" : "type");
   const [busy, setBusy] = useState(false);
+  const [scanning, setScanning] = useState(false);
 
   const isDemo = !!work?.is_demo;
 
@@ -78,12 +80,16 @@ export default function Workspace() {
     if (!events.length) { toast.error("Add at least one creation event"); return; }
     if (!jurisdictions.length) { toast.error("Select at least one jurisdiction"); return; }
     setBusy(true);
+    setScanning(true);
+    const minDelay = new Promise((r) => setTimeout(r, 2100));
     try {
-      const data = await api.analyze(work.id, jurisdictions);
+      const [data] = await Promise.all([api.analyze(work.id, jurisdictions), minDelay]);
       setAnalysis(data);
+      setScanning(false);
       setStep("analysis");
       toast.success(`Analysis complete — ${data.results.length} conclusions across ${data.jurisdictions.length} jurisdictions.`);
     } catch (e) {
+      setScanning(false);
       toast.error(e?.response?.data?.detail || "Analysis failed");
     } finally {
       setBusy(false);
@@ -92,7 +98,12 @@ export default function Workspace() {
 
   return (
     <div className="min-h-screen bg-[#07090e] text-slate-100 flex">
+      <div className="uc-grain" />
       <WorkflowSidebar activeStep={step} completed={completed} onNavigate={setStep} />
+
+      <AnimatePresence>
+        {scanning && <AnalysisRunOverlay jurisdictions={jurisdictions} />}
+      </AnimatePresence>
 
       <main className="flex-1 overflow-x-hidden">
         <TopBar work={work} step={step} isDemo={isDemo} />
@@ -101,10 +112,10 @@ export default function Workspace() {
           <AnimatePresence mode="wait">
             <motion.div
               key={step}
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.25 }}
+              initial={{ opacity: 0, y: 14, filter: "blur(4px)" }}
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              exit={{ opacity: 0, y: -10, filter: "blur(4px)" }}
+              transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
             >
               {step === "type" && (
                 <WorkTypeSelector onPick={onPickType} busy={busy} />

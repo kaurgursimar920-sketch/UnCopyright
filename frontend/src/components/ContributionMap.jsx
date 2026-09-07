@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { ACTOR_STYLES, ISSUE_LABEL } from "@/lib/api";
 
@@ -30,10 +31,17 @@ export default function ContributionMap({ events, onNext }) {
           <div className="col-span-2 uc-label">Actor</div>
           <div className="col-span-4 uc-label">Qualitative band</div>
         </div>
-        {rows.map((ev) => {
+        {rows.map((ev, ri) => {
           const actor = ACTOR_STYLES[ev.actor] || ACTOR_STYLES.HUMAN;
           return (
-            <div key={ev.creation_event_id} className="grid grid-cols-12 gap-4 px-6 py-5 border-b border-white/5 last:border-0" data-testid={`contribution-row-${ev.creation_event_id}`}>
+            <motion.div
+              key={ev.creation_event_id}
+              initial={{ opacity: 0, x: -14 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.4, delay: ri * 0.07, ease: [0.22, 1, 0.36, 1] }}
+              className="grid grid-cols-12 gap-4 px-6 py-5 border-b border-white/5 last:border-0"
+              data-testid={`contribution-row-${ev.creation_event_id}`}
+            >
               <div className="col-span-1 font-mono text-amber-500 font-bold">{String(ev.sequence).padStart(2, "0")}</div>
               <div className="col-span-5">
                 <div className="text-slate-200 text-sm mb-1">{ev.description}</div>
@@ -49,19 +57,31 @@ export default function ContributionMap({ events, onNext }) {
               <div className="col-span-4">
                 <div className="flex items-center gap-1.5 mb-1.5">
                   {Array.from({ length: 5 }).map((_, i) => (
-                    <span key={`h${i}`} className={`h-2 w-6 rounded-sm ${i < ev.band.human ? "bg-blue-500" : "bg-white/[0.05]"}`} />
+                    <motion.span
+                      key={`h${i}`}
+                      initial={{ scaleX: 0 }}
+                      animate={{ scaleX: 1 }}
+                      transition={{ duration: 0.4, delay: 0.2 + ri * 0.07 + i * 0.05 }}
+                      className={`h-2 w-6 rounded-sm origin-left ${i < ev.band.human ? "bg-blue-500" : "bg-white/[0.05]"}`}
+                    />
                   ))}
                   <span className="text-[0.65rem] font-mono uppercase tracking-wider text-blue-400 ml-2">Human</span>
                 </div>
                 <div className="flex items-center gap-1.5 mb-1.5">
                   {Array.from({ length: 5 }).map((_, i) => (
-                    <span key={`a${i}`} className={`h-2 w-6 rounded-sm ${i < ev.band.ai ? "bg-violet-500" : "bg-white/[0.05]"}`} />
+                    <motion.span
+                      key={`a${i}`}
+                      initial={{ scaleX: 0 }}
+                      animate={{ scaleX: 1 }}
+                      transition={{ duration: 0.4, delay: 0.35 + ri * 0.07 + i * 0.05 }}
+                      className={`h-2 w-6 rounded-sm origin-left ${i < ev.band.ai ? "bg-violet-500" : "bg-white/[0.05]"}`}
+                    />
                   ))}
                   <span className="text-[0.65rem] font-mono uppercase tracking-wider text-violet-400 ml-2">AI</span>
                 </div>
                 <div className="text-xs text-slate-500 font-mono">{ev.band.label}</div>
               </div>
-            </div>
+            </motion.div>
           );
         })}
       </div>

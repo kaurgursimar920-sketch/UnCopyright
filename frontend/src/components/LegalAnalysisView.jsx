@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, ExternalLink, ChevronDown, ChevronUp } from "lucide-react";
 import { POSITION_STYLES, ISSUE_LABEL, JURI_META, ACTOR_STYLES } from "@/lib/api";
 
@@ -26,8 +27,15 @@ export default function LegalAnalysisView({ analysis, onNext }) {
       </p>
 
       <div className="space-y-6">
-        {grouped.map(({ event, items }) => (
-          <EventGroup key={event.creation_event_id} event={event} items={items} />
+        {grouped.map(({ event, items }, gi) => (
+          <motion.div
+            key={event.creation_event_id}
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: gi * 0.08, duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <EventGroup event={event} items={items} />
+          </motion.div>
         ))}
       </div>
 
@@ -88,8 +96,16 @@ function SyllogismCard({ r }) {
         </div>
       </button>
 
-      {open && (
-        <div className="border-t border-white/5 p-4 space-y-3">
+      <AnimatePresence initial={false}>
+        {open && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
+            className="overflow-hidden"
+          >
+            <div className="border-t border-white/5 p-4 space-y-3">
           <Row label="Fact" testid="legal-syllogism-fact-box">
             <ul className="list-disc list-inside space-y-1 text-slate-200">
               {r.facts.map((f, i) => <li key={i}>{f}</li>)}
@@ -123,8 +139,10 @@ function SyllogismCard({ r }) {
               </ul>
             </Row>
           )}
-        </div>
-      )}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

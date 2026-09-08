@@ -56,6 +56,11 @@ export default function ComparativeClaimMatrix({ analysis, onNext }) {
                     <span className={`w-1.5 h-1.5 rounded-full ${s.dot}`} />
                     {pos === "POTENTIALLY_CLAIMABLE" ? "CLAIM" : pos === "UNCERTAIN" ? "UNCERTAIN" : "EXCLUDE"}
                   </motion.span>
+                  {j === "United Kingdom" && row.issue === "AI_GENERATED_MATERIAL" && (
+                    <div className="text-[0.58rem] font-mono text-amber-500/70 mt-1" data-testid="reform-risk-indicator">
+                      ⚠ reform risk — proposed
+                    </div>
+                  )}
                 </div>
               );
             })}

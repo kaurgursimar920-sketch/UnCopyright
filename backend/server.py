@@ -14,7 +14,7 @@ from datetime import datetime, timezone
 
 from legal_data import (
     AUTHORITIES, ISSUES, JURISDICTIONS, ANALYSIS_RULES,
-    find_authority, claim_position, confidence_level,
+    find_authority, get_reform_authorities, claim_position, confidence_level,
 )
 from sarah_demo import SARAH_WORK, SARAH_EVENTS, SARAH_FILES, SARAH_WORK_ID
 
@@ -329,12 +329,30 @@ async def analyze(work_id: str, req: AnalyzeRequest):
             "positions": {},
         })["positions"][r["jurisdiction"]] = r["claim_position"]
 
+    # Separate informational branch: PROPOSED_REFORM warnings never feed the decision path.
+    reform_warnings = []
+    if "United Kingdom" in jurisdictions and any(
+        r["jurisdiction"] == "United Kingdom" and r["issue"] == "AI_GENERATED_MATERIAL" for r in results
+    ):
+        for ra in get_reform_authorities("United Kingdom", "AI_GENERATED_MATERIAL"):
+            reform_warnings.append({
+                "jurisdiction": "United Kingdom",
+                "authority_id": ra["authority_id"],
+                "legal_status": ra["legal_status"],
+                "authority_name": ra["authority_name"],
+                "authority_reference": ra["authority_reference"],
+                "source_url": ra["source_url"],
+                "last_verified": ra["last_verified"],
+                "message": "The UK Government has proposed removing the specific statutory protection for wholly computer-generated works (CDPA 1988 s.9(3)). This proposal is not currently law and does not alter the current-law assessment above.",
+            })
+
     return {
         "work": work,
         "events": events,
         "jurisdictions": jurisdictions,
         "results": results,
         "claim_map": list(claim_map.values()),
+        "reform_warnings": reform_warnings,
     }
 
 

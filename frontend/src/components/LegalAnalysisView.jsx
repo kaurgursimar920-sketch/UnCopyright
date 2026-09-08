@@ -39,6 +39,8 @@ export default function LegalAnalysisView({ analysis, onNext }) {
         ))}
       </div>
 
+      {analysis.reform_warnings?.length > 0 && <ReformPanel warnings={analysis.reform_warnings} />}
+
       <div className="mt-10">
         <Button onClick={onNext} className="bg-amber-600 hover:bg-amber-500 text-black font-semibold" data-testid="btn-analysis-continue">
           View Claim Matrix <ArrowRight className="w-4 h-4 ml-2" />
@@ -92,6 +94,14 @@ function SyllogismCard({ r }) {
             {pos.label}
           </span>
           <span className="uc-cite">CONF · {r.confidence}</span>
+          {r.jurisdiction === "United Kingdom" && r.issue === "AI_GENERATED_MATERIAL" && (
+            <span
+              className="px-2 py-0.5 rounded text-[0.6rem] font-mono border border-amber-500/40 text-amber-400/90 bg-amber-500/[0.06]"
+              data-testid="reform-tag"
+            >
+              ⚠ reform proposed
+            </span>
+          )}
           {open ? <ChevronUp className="w-4 h-4 text-slate-500" /> : <ChevronDown className="w-4 h-4 text-slate-500" />}
         </div>
       </button>
@@ -161,5 +171,43 @@ function Empty() {
     <div className="uc-card p-10 text-center">
       <p className="text-slate-400">Run the analysis engine to see legal syllogism here.</p>
     </div>
+  );
+}
+
+function ReformPanel({ warnings }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 14 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.35, duration: 0.45 }}
+      className="mt-6 uc-card p-5 border-l-2 border-l-amber-500"
+      data-testid="reform-warning-panel"
+    >
+      <div className="flex items-center gap-2 mb-2">
+        <span className="text-amber-400">⚠</span>
+        <span className="font-mono text-sm text-amber-300 font-semibold uppercase tracking-wider">
+          Proposed reform — not current law
+        </span>
+      </div>
+      {warnings.map((w) => (
+        <div key={w.authority_id} className="text-sm text-slate-300">
+          <p>
+            <span className="text-slate-100 font-medium">{w.jurisdiction} proposed reform:</span> {w.message}
+          </p>
+          <a
+            href={w.source_url}
+            target="_blank"
+            rel="noreferrer"
+            className="uc-cite inline-flex items-center gap-1 mt-2 hover:underline"
+            data-testid="reform-warning-source-link"
+          >
+            View proposed reform source — Government report <ExternalLink className="w-3 h-3" />
+          </a>
+          <div className="text-xs text-slate-500 mt-1.5 font-mono">
+            {w.authority_reference} · Last verified {w.last_verified} · Proposed Reform
+          </div>
+        </div>
+      ))}
+    </motion.div>
   );
 }

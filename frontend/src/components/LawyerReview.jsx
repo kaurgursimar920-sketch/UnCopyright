@@ -92,6 +92,24 @@ export default function LawyerReview({ analysis, work, events, jurisdictions }) 
         })}
       </Section>
 
+      {analysis.reform_warnings?.length > 0 && (
+        <Section title="⚠ Proposed reform — not current law">
+          {analysis.reform_warnings.map((w) => (
+            <div key={w.authority_id} className="text-sm text-slate-300" data-testid="reform-warning-panel">
+              <p>
+                <span className="text-slate-100 font-medium">{w.jurisdiction} proposed reform:</span> {w.message}
+              </p>
+              <a href={w.source_url} target="_blank" rel="noreferrer" className="uc-cite inline-flex items-center gap-1 mt-2 hover:underline">
+                View proposed reform source — Government report <ExternalLink className="w-3 h-3" />
+              </a>
+              <div className="text-xs text-slate-500 mt-1.5 font-mono">
+                {w.authority_reference} · Last verified {w.last_verified} · Proposed Reform
+              </div>
+            </div>
+          ))}
+        </Section>
+      )}
+
       <Section title="3 · Registration / filing handoff">
         <p className="text-sm text-slate-300 leading-relaxed">
           This platform does not file or complete copyright registration. Consult a qualified copyright lawyer or authorised filing professional regarding registration, filing requirements and applicable disclosures. Where the analysis returned an

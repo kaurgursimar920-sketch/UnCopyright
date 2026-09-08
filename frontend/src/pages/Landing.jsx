@@ -211,7 +211,7 @@ export default function Landing() {
                 className="border-white/15 bg-white/[0.03] hover:bg-white/[0.08] text-slate-100 h-12 px-6 rounded-md"
               >
                 <FileSearch className="w-4 h-4 mr-2" />
-                Inspect Sarah Sample — Visual Artwork
+                Inspect Sara Sample — Visual Artwork
               </Button>
             </motion.div>
 

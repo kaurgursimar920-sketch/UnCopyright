@@ -249,6 +249,8 @@ def _conclusion_text(issue: str, position: str) -> str:
 
 def _evidence_gaps(event: dict, issue: str) -> List[str]:
     gaps = []
+    if event.get("prompt_missing"):
+        gaps.append("The original AI prompt and generation details were not provided by the creator.")
     if not event.get("source_files"):
         gaps.append("No source files attached to this event.")
     if event.get("certainty") == "INFERRED":
@@ -256,7 +258,7 @@ def _evidence_gaps(event: dict, issue: str) -> List[str]:
     if issue == "HUMAN_MODIFICATION" and len(event.get("source_files", [])) < 2:
         gaps.append("Before/after artefacts (pre-edit and post-edit) not both on record.")
     if issue == "AI_GENERATED_MATERIAL" and not any("prompt" in (f or "").lower() for f in event.get("source_files", [])):
-        gaps.append("Prompt log or generation parameters not preserved.")
+        gaps.append("The original AI prompt and generation details were not provided by the creator.")
     return gaps
 
 

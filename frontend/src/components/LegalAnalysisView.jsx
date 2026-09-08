@@ -20,7 +20,7 @@ export default function LegalAnalysisView({ analysis, onNext }) {
 
   return (
     <div>
-      <div className="uc-label mb-3">06 · Legal syllogism</div>
+      <div className="uc-label mb-3">06 · Legal assessment</div>
       <h1 className="font-display text-4xl font-black tracking-tight mb-3">Fact → Rule → Authority → Application → Conclusion.</h1>
       <p className="text-slate-400 max-w-3xl mb-8">
         Every issue is analysed under every selected jurisdiction. {analysis.results.length} conclusions across {analysis.jurisdictions.length} jurisdiction(s).
@@ -99,7 +99,7 @@ function SyllogismCard({ r }) {
               className="px-2 py-0.5 rounded text-[0.6rem] font-mono border border-amber-500/40 text-amber-400/90 bg-amber-500/[0.06]"
               data-testid="reform-tag"
             >
-              ⚠ reform proposed
+              ⚠ Proposed Reform · Full explanation at the end of the assessment
             </span>
           )}
           {open ? <ChevronUp className="w-4 h-4 text-slate-500" /> : <ChevronDown className="w-4 h-4 text-slate-500" />}

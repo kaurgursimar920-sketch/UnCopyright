@@ -182,7 +182,7 @@ function TopBar({ work, step, isDemo }) {
           )}
           {isDemo && (
             <span className="ml-2 px-2 py-0.5 text-[0.65rem] font-mono uppercase tracking-widest rounded border border-amber-500/40 text-amber-400 bg-amber-500/5">
-              Sample · Sarah
+              Sample · Sara
             </span>
           )}
         </div>

@@ -27,7 +27,9 @@ def test_authorities(s):
     r = s.get(f"{API}/reference/authorities")
     assert r.status_code == 200
     data = r.json()
-    assert isinstance(data, list) and len(data) == 20
+    assert isinstance(data, list) and len(data) == 21
+    statuses = {a["legal_status"] for a in data}
+    assert "CURRENT_LAW" in statuses and "PROPOSED_REFORM" in statuses
     assert all("authority_id" in a and "rule_statement" in a for a in data)
 
 
@@ -58,7 +60,7 @@ def test_demo_sarah(s):
     assert r.status_code == 200
     data = r.json()
     assert data["work"]["id"] == DEMO_ID
-    assert len(data["events"]) == 5
+    assert len(data["events"]) == 8
     assert len(data["files"]) == 5
 
 
@@ -67,7 +69,7 @@ def test_get_work_demo(s):
     assert r.status_code == 200
     data = r.json()
     assert data["work"]["id"] == DEMO_ID
-    assert len(data["events"]) == 5
+    assert len(data["events"]) == 8
 
 
 # Works CRUD
@@ -90,20 +92,24 @@ def test_create_work_invalid_type(s):
 
 
 # Analysis on demo
-def test_analyze_demo_21_results(s):
+def test_analyze_demo_39_results(s):
     r = s.post(f"{API}/works/{DEMO_ID}/analyze",
                json={"jurisdictions": ["India", "United States", "United Kingdom"]})
     assert r.status_code == 200
     data = r.json()
-    assert len(data["results"]) == 21
-    # jurisdictional differentiator on EV-02 (AI_GENERATED_MATERIAL)
-    ev02 = [x for x in data["results"] if x["creation_event_id"] == "EV-02"]
+    assert len(data["results"]) == 39
+    # jurisdictional differentiator on EV-002 (AI_GENERATED_MATERIAL)
+    ev02 = [x for x in data["results"] if x["creation_event_id"] == "EV-002"]
     positions = {x["jurisdiction"]: x["claim_position"] for x in ev02}
     assert positions["United States"] == "EXCLUDE"
     assert positions["India"] == "UNCERTAIN"
     assert positions["United Kingdom"] == "POTENTIALLY_CLAIMABLE"
     # claim_map present
-    assert isinstance(data.get("claim_map"), list) and len(data["claim_map"]) >= 5
+    assert isinstance(data.get("claim_map"), list) and len(data["claim_map"]) == 13
+    # reform warning present for UK AI material, with exact creator-missing gap on EV-005
+    assert len(data.get("reform_warnings", [])) == 1
+    ev05 = [x for x in data["results"] if x["creation_event_id"] == "EV-005"]
+    assert any("not provided by the creator" in g for x in ev05 for g in x["evidence_gaps"])
 
 
 def test_analyze_events_flow(s):

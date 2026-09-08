@@ -8,7 +8,7 @@ const STEPS = [
   { key: "history", label: "Creation History" },
   { key: "contribution", label: "Contribution Map" },
   { key: "jurisdiction", label: "Jurisdiction Engine" },
-  { key: "analysis", label: "Legal Syllogism" },
+  { key: "analysis", label: "Legal Assessment" },
   { key: "matrix", label: "Claim Matrix" },
   { key: "evidence", label: "Evidence & Gaps" },
   { key: "review", label: "Lawyer Review" },

@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Plus, Trash2, ArrowRight } from "lucide-react";
+import { Plus, Trash2, ArrowRight, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ISSUE_LABEL } from "@/lib/api";
 
 const ISSUES = ["AI_GENERATED_MATERIAL", "HUMAN_CONTRIBUTION", "SELECTION_ARRANGEMENT", "HUMAN_MODIFICATION"];
 
-export default function CreationTimeline({ work, events, onSave, onNext, readOnly }) {
+export default function CreationTimeline({ work, events, files = [], onSave, onNext, readOnly }) {
   const [items, setItems] = useState(events);
 
   useEffect(() => {
@@ -138,13 +138,13 @@ export default function CreationTimeline({ work, events, onSave, onNext, readOnl
                   </Select>
                 </div>
                 <div className="md:col-span-6">
-                  <div className="uc-label mb-1.5">Source files (comma-separated)</div>
-                  <Input
-                    value={(ev.source_files || []).join(", ")}
-                    onChange={(e) => update(i, { source_files: e.target.value.split(",").map((s) => s.trim()).filter(Boolean) })}
-                    placeholder="Sketch_01.png, AI_Output_03.png"
+                  <div className="uc-label mb-1.5">Supporting evidence</div>
+                  <EvidenceSelect
+                    value={ev.source_files || []}
+                    options={files}
                     disabled={readOnly}
-                    className="bg-slate-950/50 border-white/10 font-mono text-sm"
+                    eventId={ev.creation_event_id}
+                    onChange={(next) => update(i, { source_files: next })}
                   />
                 </div>
               </div>
@@ -168,6 +168,59 @@ export default function CreationTimeline({ work, events, onSave, onNext, readOnl
           Continue <ArrowRight className="w-4 h-4 ml-2" />
         </Button>
       </div>
+    </div>
+  );
+}
+
+function EvidenceSelect({ value, options, onChange, disabled, eventId }) {
+  const [open, setOpen] = useState(false);
+  const toggleFile = (name) => {
+    onChange(value.includes(name) ? value.filter((v) => v !== name) : [...value, name]);
+  };
+  return (
+    <div className="relative">
+      <button
+        type="button"
+        disabled={disabled}
+        onClick={() => setOpen((o) => !o)}
+        data-testid={`event-evidence-${eventId}`}
+        className="w-full bg-slate-950/50 border border-white/10 rounded px-3 py-2 text-left text-sm font-mono text-slate-300 flex items-center justify-between gap-2 disabled:opacity-60 disabled:cursor-not-allowed hover:border-amber-500/40 transition-colors"
+      >
+        <span className="truncate">
+          {value.length ? `${value.length} evidence file(s) linked` : "Select supporting evidence…"}
+        </span>
+        <ChevronDown className="w-4 h-4 text-slate-500 shrink-0" />
+      </button>
+      {open && !disabled && (
+        <>
+          <div className="fixed inset-0 z-10" onClick={() => setOpen(false)} />
+          <div className="absolute z-20 mt-1 w-full uc-card p-2 max-h-56 overflow-y-auto" data-testid={`event-evidence-options-${eventId}`}>
+            {options.length === 0 && (
+              <div className="text-xs text-slate-500 font-mono p-2">
+                No evidence ingested yet — add files in the Evidence Ingestion stage.
+              </div>
+            )}
+            {options.map((f) => (
+              <label key={f.file_name} className="flex items-center gap-2.5 px-2 py-1.5 rounded hover:bg-white/[0.04] cursor-pointer">
+                <Checkbox
+                  checked={value.includes(f.file_name)}
+                  onCheckedChange={() => toggleFile(f.file_name)}
+                  className="border-white/20 data-[state=checked]:bg-amber-500 data-[state=checked]:border-amber-500"
+                />
+                <span className="font-mono text-xs text-slate-200 truncate">{f.file_name}</span>
+                <span className="uc-label ml-auto shrink-0">{f.stage}</span>
+              </label>
+            ))}
+          </div>
+        </>
+      )}
+      {value.length > 0 && (
+        <div className="flex flex-wrap gap-1.5 mt-2">
+          {value.map((v) => (
+            <span key={v} className="uc-cite">{v}</span>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

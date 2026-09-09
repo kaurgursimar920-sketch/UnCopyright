@@ -92,12 +92,12 @@ def test_create_work_invalid_type(s):
 
 
 # Analysis on demo
-def test_analyze_demo_39_results(s):
+def test_analyze_demo_42_results(s):
     r = s.post(f"{API}/works/{DEMO_ID}/analyze",
                json={"jurisdictions": ["India", "United States", "United Kingdom"]})
     assert r.status_code == 200
     data = r.json()
-    assert len(data["results"]) == 39
+    assert len(data["results"]) == 42
     # jurisdictional differentiator on EV-002 (AI_GENERATED_MATERIAL)
     ev02 = [x for x in data["results"] if x["creation_event_id"] == "EV-002"]
     positions = {x["jurisdiction"]: x["claim_position"] for x in ev02}
@@ -105,7 +105,7 @@ def test_analyze_demo_39_results(s):
     assert positions["India"] == "UNCERTAIN"
     assert positions["United Kingdom"] == "POTENTIALLY_CLAIMABLE"
     # claim_map present
-    assert isinstance(data.get("claim_map"), list) and len(data["claim_map"]) == 13
+    assert isinstance(data.get("claim_map"), list) and len(data["claim_map"]) == 14
     # reform warning present for UK AI material, with exact creator-missing gap on EV-005
     assert len(data.get("reform_warnings", [])) == 1
     ev05 = [x for x in data["results"] if x["creation_event_id"] == "EV-005"]

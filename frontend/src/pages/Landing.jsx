@@ -133,9 +133,9 @@ export default function Landing() {
       <header className="border-b border-white/5 relative z-10">
         <div className="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <LogoMark />
+            <LogoMark size="w-10 h-10" iconSize="w-6 h-6" />
             <div>
-              <div className="font-display text-lg font-bold tracking-tight">
+              <div className="font-display text-[22px] font-bold tracking-tight">
                 Un<span className="text-amber-500">Copyright</span>
               </div>
               <div className="uc-label -mt-0.5">Legal Evidence Workspace</div>

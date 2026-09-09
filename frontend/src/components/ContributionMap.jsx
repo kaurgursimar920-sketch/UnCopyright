@@ -25,7 +25,7 @@ export default function ContributionMap({ events, onNext }) {
       </p>
 
       <div className="uc-card p-0 overflow-hidden">
-        <div className="grid grid-cols-12 gap-4 px-6 py-3 border-b border-white/5 bg-white/[0.02]">
+        <div className="hidden md:grid grid-cols-12 gap-4 px-6 py-3 border-b border-white/5 bg-white/[0.02]">
           <div className="col-span-1 uc-label">EV</div>
           <div className="col-span-5 uc-label">Component / Event</div>
           <div className="col-span-2 uc-label">Actor</div>
@@ -39,11 +39,11 @@ export default function ContributionMap({ events, onNext }) {
               initial={{ opacity: 0, x: -14 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.4, delay: ri * 0.07, ease: [0.22, 1, 0.36, 1] }}
-              className="grid grid-cols-12 gap-4 px-6 py-5 border-b border-white/5 last:border-0"
+              className="grid grid-cols-1 md:grid-cols-12 gap-3 md:gap-4 px-4 sm:px-6 py-5 border-b border-white/5 last:border-0"
               data-testid={`contribution-row-${ev.creation_event_id}`}
             >
-              <div className="col-span-1 font-mono text-amber-500 font-bold">{String(ev.sequence).padStart(2, "0")}</div>
-              <div className="col-span-5">
+              <div className="md:col-span-1 font-mono text-amber-500 font-bold">{String(ev.sequence).padStart(2, "0")}</div>
+              <div className="md:col-span-5">
                 <div className="text-slate-200 text-sm mb-1">{ev.description}</div>
                 <div className="flex flex-wrap gap-1.5">
                   {(ev.issues || []).map((iss) => (
@@ -51,10 +51,10 @@ export default function ContributionMap({ events, onNext }) {
                   ))}
                 </div>
               </div>
-              <div className="col-span-2">
+              <div className="md:col-span-2">
                 <span className={`px-2 py-0.5 text-xs font-mono border rounded ${actor.cls}`}>{actor.label}</span>
               </div>
-              <div className="col-span-4">
+              <div className="md:col-span-4">
                 <div className="flex items-center gap-1.5 mb-1.5">
                   {Array.from({ length: 5 }).map((_, i) => (
                     <motion.span

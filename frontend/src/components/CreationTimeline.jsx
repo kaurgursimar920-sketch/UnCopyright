@@ -73,10 +73,10 @@ export default function CreationTimeline({ work, events, files = [], onSave, onN
             data-testid={`timeline-event-${ev.creation_event_id}`}
           >
             <span className="tl" /><span className="br" />
-            <div className="flex items-start gap-5">
-              <div className="shrink-0 w-14 flex flex-col items-center">
+            <div className="flex items-start gap-3 sm:gap-5">
+              <div className="shrink-0 w-10 sm:w-14 flex flex-col items-center">
                 <div className="uc-label text-slate-500">EV</div>
-                <div className="font-display text-3xl font-black text-amber-500">{String(ev.sequence).padStart(2, "0")}</div>
+                <div className="font-display text-2xl sm:text-3xl font-black text-amber-500">{String(ev.sequence).padStart(2, "0")}</div>
               </div>
               <div className="flex-1 grid grid-cols-1 md:grid-cols-6 gap-3">
                 <div className="md:col-span-4">

@@ -13,7 +13,7 @@ export default function LawyerReview({ analysis, work, events, jurisdictions }) 
   return (
     <div className="uc-print-page">
       <div className="uc-label mb-3">09 · Lawyer review dossier</div>
-      <div className="flex items-start justify-between gap-6 mb-8">
+      <div className="flex flex-wrap items-start justify-between gap-4 sm:gap-6 mb-8">
         <div>
           <h1 className="font-display text-4xl font-black tracking-tight mb-2">Copyright Analysis Memorandum</h1>
           <p className="text-slate-400">{work?.title} · {work?.work_type} · Prepared {new Date().toLocaleDateString()}</p>

@@ -413,7 +413,7 @@ export default function Landing() {
       </section>
 
       <footer className="border-t border-white/5">
-        <div className="max-w-7xl mx-auto px-6 py-8 text-xs text-slate-500 font-mono flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-6 py-8 text-xs text-slate-500 font-mono flex flex-wrap gap-2 items-center justify-between">
           <span>UnCopyright · Legal analysis tool. Not legal advice. Not a filing service.</span>
           <span>v0.1 · MVP</span>
         </div>

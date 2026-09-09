@@ -15,7 +15,7 @@ import EvidenceMap from "@/components/EvidenceMap";
 import LawyerReview from "@/components/LawyerReview";
 import { Button } from "@/components/ui/button";
 import { api } from "@/lib/api";
-import { ChevronRight, Loader2 } from "lucide-react";
+import { ChevronRight, Loader2, Menu } from "lucide-react";
 
 const STEP_ORDER = ["type", "upload", "history", "contribution", "jurisdiction", "analysis", "matrix", "evidence", "review"];
 
@@ -32,6 +32,7 @@ export default function Workspace() {
   const [step, setStep] = useState(workId ? "history" : "type");
   const [busy, setBusy] = useState(false);
   const [scanning, setScanning] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const isDemo = !!work?.is_demo;
 
@@ -100,16 +101,46 @@ export default function Workspace() {
   return (
     <div className="min-h-screen bg-[#07090e] text-slate-100 flex">
       <div className="uc-grain" />
-      <WorkflowSidebar activeStep={step} completed={completed} onNavigate={setStep} />
+      <div className="hidden md:flex">
+        <WorkflowSidebar activeStep={step} completed={completed} onNavigate={setStep} />
+      </div>
+
+      <AnimatePresence>
+        {menuOpen && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-40 bg-black/60 md:hidden"
+              onClick={() => setMenuOpen(false)}
+            />
+            <motion.div
+              initial={{ x: -300 }}
+              animate={{ x: 0 }}
+              exit={{ x: -300 }}
+              transition={{ type: "spring", stiffness: 320, damping: 30 }}
+              className="fixed inset-y-0 left-0 z-50 md:hidden"
+            >
+              <WorkflowSidebar
+                activeStep={step}
+                completed={completed}
+                idSuffix="-mobile"
+                onNavigate={(k) => { setStep(k); setMenuOpen(false); }}
+              />
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
 
       <AnimatePresence>
         {scanning && <AnalysisRunOverlay jurisdictions={jurisdictions} />}
       </AnimatePresence>
 
       <main className="flex-1 overflow-x-hidden">
-        <TopBar work={work} step={step} isDemo={isDemo} />
+        <TopBar work={work} step={step} isDemo={isDemo} onMenu={() => setMenuOpen(true)} />
 
-        <div className="max-w-6xl mx-auto px-8 py-10 uc-line-bg">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10 uc-line-bg">
           <AnimatePresence mode="wait">
             <motion.div
               key={step}
@@ -177,14 +208,22 @@ export default function Workspace() {
   );
 }
 
-function TopBar({ work, step, isDemo }) {
+function TopBar({ work, step, isDemo, onMenu }) {
   return (
     <div className="border-b border-white/5 bg-[#0a0d15]/80 backdrop-blur uc-no-print sticky top-0 z-20">
-      <div className="max-w-6xl mx-auto px-8 py-4 flex items-center justify-between">
-        <div className="flex items-center gap-3 text-sm">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between gap-3">
+        <button
+          onClick={onMenu}
+          className="md:hidden shrink-0 w-9 h-9 rounded border border-white/10 bg-white/[0.03] flex items-center justify-center text-slate-300"
+          data-testid="mobile-menu-button"
+          aria-label="Open workflow menu"
+        >
+          <Menu className="w-4 h-4" />
+        </button>
+        <div className="flex items-center gap-3 text-sm min-w-0 flex-wrap">
           <span className="uc-label">Workspace</span>
           <ChevronRight className="w-3 h-3 text-slate-600" />
-          <span className="font-mono text-slate-300">{work?.title || "New analysis"}</span>
+          <span className="font-mono text-slate-300 truncate max-w-[38vw] sm:max-w-none">{work?.title || "New analysis"}</span>
           {work?.work_type && (
             <span className="uc-cite">{work.work_type.toUpperCase()}</span>
           )}

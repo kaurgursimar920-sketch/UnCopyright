@@ -87,7 +87,7 @@ function SyllogismCard({ r }) {
   const meta = JURI_META[r.jurisdiction];
   return (
     <div className="border border-white/8 rounded" data-testid={`syllogism-${r.creation_event_id}-${r.issue}-${meta.code}`}>
-      <button onClick={() => setOpen(!open)} className="w-full flex items-center justify-between gap-4 px-4 py-3 hover:bg-white/[0.02] transition-colors text-left">
+      <button onClick={() => setOpen(!open)} className="w-full flex flex-wrap items-center justify-between gap-2 sm:gap-4 px-4 py-3 hover:bg-white/[0.02] transition-colors text-left">
         <div className="flex items-center gap-3 flex-1 min-w-0">
           <span className="text-xl">{meta.flag}</span>
           <div className="min-w-0">
@@ -95,7 +95,7 @@ function SyllogismCard({ r }) {
             <div className="uc-label truncate">{r.jurisdiction} · {meta.law}</div>
           </div>
         </div>
-        <div className="flex items-center gap-3 shrink-0">
+        <div className="flex flex-wrap items-center gap-2 sm:gap-3">
           <span className={`px-2.5 py-1 rounded text-xs font-mono border ${pos.badge}`} data-testid={`claim-badge-${r.claim_position}`}>
             <span className={`inline-block w-1.5 h-1.5 rounded-full mr-1.5 ${pos.dot}`} />
             {pos.label}
@@ -166,9 +166,9 @@ function SyllogismCard({ r }) {
 
 function Row({ label, children, testid }) {
   return (
-    <div className="grid grid-cols-12 gap-3" data-testid={testid}>
-      <div className="col-span-2 uc-label pt-1">{label}</div>
-      <div className="col-span-10 text-sm">{children}</div>
+    <div className="grid grid-cols-1 sm:grid-cols-12 gap-1 sm:gap-3" data-testid={testid}>
+      <div className="sm:col-span-2 uc-label pt-1">{label}</div>
+      <div className="sm:col-span-10 text-sm">{children}</div>
     </div>
   );
 }

@@ -16,7 +16,8 @@ export default function ComparativeClaimMatrix({ analysis, onNext }) {
         Each row is an (event × issue) pair. Each column is a jurisdiction. Colours are derived from the analysis — never hard-coded.
       </p>
 
-      <div className="uc-card overflow-hidden" data-testid="claim-matrix-table">
+      <div className="uc-card overflow-x-auto" data-testid="claim-matrix-table">
+        <div className="min-w-[680px]">
         <div className="grid px-5 py-3 border-b border-white/5 bg-white/[0.02]" style={{ gridTemplateColumns: `2fr 3fr repeat(${juri.length}, 1fr)` }}>
           <div className="uc-label">Event</div>
           <div className="uc-label">Issue</div>
@@ -66,6 +67,7 @@ export default function ComparativeClaimMatrix({ analysis, onNext }) {
             })}
           </motion.div>
         ))}
+        </div>
       </div>
 
       <Legend />

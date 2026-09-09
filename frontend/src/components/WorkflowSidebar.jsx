@@ -14,10 +14,10 @@ const STEPS = [
   { key: "review", label: "Lawyer Review" },
 ];
 
-export default function WorkflowSidebar({ activeStep, completed = [], onNavigate }) {
+export default function WorkflowSidebar({ activeStep, completed = [], onNavigate, idSuffix = "" }) {
   const progress = Math.min(1, Math.max(0, completed.length / STEPS.length));
   return (
-    <aside className="w-72 shrink-0 border-r border-white/5 bg-[#0a0d15] flex flex-col uc-no-print">
+    <aside className="w-72 shrink-0 border-r border-white/5 bg-[#0a0d15] flex flex-col h-full uc-no-print">
       <div className="p-5 border-b border-white/5">
         <Link to="/" className="flex items-center gap-2.5 group" data-testid="sidebar-home-link">
           <div className="w-8 h-8 rounded bg-gradient-to-br from-amber-500 to-amber-700 flex items-center justify-center">
@@ -59,7 +59,7 @@ export default function WorkflowSidebar({ activeStep, completed = [], onNavigate
               <button
                 key={step.key}
                 onClick={() => onNavigate?.(step.key)}
-                data-testid={`sidebar-step-${step.key}`}
+                data-testid={`sidebar-step-${step.key}${idSuffix}`}
                 className={`relative w-full text-left px-3 py-2.5 rounded flex items-center gap-3 group transition-colors ${
                   isActive ? "bg-amber-500/10 border border-amber-500/30" : "border border-transparent hover:bg-white/[0.03]"
                 }`}

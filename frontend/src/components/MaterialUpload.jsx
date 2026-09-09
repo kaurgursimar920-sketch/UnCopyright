@@ -87,8 +87,11 @@ export default function MaterialUpload({ work, files, onUploaded, onNext, readOn
     <div>
       <div className="uc-label mb-3">02 · Evidence ingestion</div>
       <h1 className="font-display text-4xl font-black tracking-tight mb-3">Bring your creation record.</h1>
-      <p className="text-slate-400 max-w-3xl mb-8">
+      <p className="text-slate-400 max-w-3xl mb-2">
         Upload the artefacts that document how the work was made. The Final Work is required; everything else is optional but strengthens the eventual claim.
+      </p>
+      <p className="text-xs font-mono text-slate-500 mb-8" data-testid="upload-disclaimer">
+        Uploading files can take a moment — thanks for your patience.
       </p>
 
       <div className="grid md:grid-cols-2 gap-4">

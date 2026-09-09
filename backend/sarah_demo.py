@@ -54,11 +54,11 @@ SARAH_EVENTS = [
     {
         "creation_event_id": "EV-005",
         "sequence": 5,
-        "description": "Sara manually repaints the face using the selected AI output as the base.",
+        "description": "Claimed event: Face was manually repainted by Sara.",
         "actor": "HUMAN",
         "timestamp": "2026-01-14T10:44:00Z",
         "certainty": "UNKNOWN",
-        "source_files": ["Output_03_selected.png", "Final_artwork.png"],
+        "source_files": [],
         "issues": ["HUMAN_MODIFICATION", "HUMAN_CONTRIBUTION"],
         "prompt_missing": True,
     },
@@ -75,11 +75,11 @@ SARAH_EVENTS = [
     {
         "creation_event_id": "EV-007",
         "sequence": 7,
-        "description": "Sara makes final expressive colour and compositional adjustments to the artwork.",
+        "description": "Claimed event: Final colour/composition adjustments were made by Sara.",
         "actor": "HUMAN",
         "timestamp": "2026-01-14T11:12:00Z",
         "certainty": "UNKNOWN",
-        "source_files": ["Final_artwork.png", "Rearranged_v1.png"],
+        "source_files": [],
         "issues": ["HUMAN_MODIFICATION", "HUMAN_CONTRIBUTION"],
     },
     {

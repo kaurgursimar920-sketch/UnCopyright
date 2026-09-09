@@ -33,8 +33,12 @@ export default function WorkflowSidebar({ activeStep, completed = [], onNavigate
       </div>
 
       <div className="p-4 border-b border-white/5">
-        <Link to="/" className="flex items-center gap-1.5 text-xs text-slate-500 hover:text-amber-500 font-mono transition-colors">
-          <ChevronLeft className="w-3 h-3" /> back to overview
+        <Link
+          to="/"
+          data-testid="sidebar-home-button"
+          className="inline-flex items-center gap-1.5 text-sm font-semibold bg-amber-600 hover:bg-amber-500 text-black rounded-lg px-4 py-2 transition-colors"
+        >
+          <ChevronLeft className="w-4 h-4" /> Home
         </Link>
       </div>
 

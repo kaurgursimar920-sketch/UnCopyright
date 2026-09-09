@@ -207,8 +207,7 @@ export default function Landing() {
                 data-testid="btn-load-sarah-sample"
                 onClick={openSarah}
                 disabled={loading}
-                variant="outline"
-                className="border-white/15 bg-white/[0.03] hover:bg-white/[0.08] text-slate-100 h-12 px-6 rounded-md"
+                className="bg-amber-600 hover:bg-amber-500 text-black font-semibold h-12 px-6 rounded-md shadow-lg shadow-amber-900/40"
               >
                 <FileSearch className="w-4 h-4 mr-2" />
                 Inspect Sara Sample — Visual Artwork

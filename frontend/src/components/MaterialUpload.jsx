@@ -34,7 +34,7 @@ export default function MaterialUpload({ work, files, onUploaded, onNext, readOn
               className="px-2.5 py-1 rounded text-xs font-mono border border-amber-500/40 text-amber-300 bg-amber-500/[0.06]"
               data-testid="evidence-locked-badge"
             >
-              ✓ Sample evidence available — locked
+              ✓ Sample evidence uploaded by Sara
             </span>
           </div>
           <ul className="space-y-2">

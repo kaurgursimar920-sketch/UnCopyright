@@ -61,7 +61,7 @@ def test_demo_sarah(s):
     data = r.json()
     assert data["work"]["id"] == DEMO_ID
     assert len(data["events"]) == 8
-    assert len(data["files"]) == 5
+    assert len(data["files"]) == 9
 
 
 def test_get_work_demo(s):

@@ -132,13 +132,13 @@ export default function Landing() {
       {/* Nav */}
       <header className="border-b border-white/5 relative z-10">
         <div className="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <LogoMark size="w-10 h-10" iconSize="w-6 h-6" />
+          <div className="flex items-center gap-3.5">
+            <LogoMark size="w-12 h-12" iconSize="w-7 h-7" />
             <div>
-              <div className="font-display text-[22px] font-bold tracking-tight">
+              <div className="font-display text-3xl font-bold tracking-tight">
                 Un<span className="text-amber-500">Copyright</span>
               </div>
-              <div className="uc-label -mt-0.5">Legal Evidence Workspace</div>
+              <div className="uc-label mt-0.5 text-[0.78rem] text-slate-400">Legal Evidence Workspace</div>
             </div>
           </div>
           <nav className="hidden md:flex items-center gap-6 text-sm text-slate-400 font-mono">
@@ -284,11 +284,10 @@ export default function Landing() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: i * 0.12, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                    className={`uc-card px-4 py-4 uc-ticks flex items-center gap-3 transition-colors duration-300 ${
-                      active ? "border-amber-500/50 bg-amber-500/[0.05]" : ""
+                    className={`flex items-center gap-3 px-1 py-3 border-b-2 transition-colors duration-300 cursor-default select-none ${
+                      active ? "border-amber-500/70" : "border-white/10"
                     }`}
                   >
-                    <span className="tl" /><span className="br" />
                     <span className={`font-bold transition-colors duration-300 ${active ? "text-amber-400" : "text-amber-500/50"}`}>
                       {String(i + 1).padStart(2, "0")}
                     </span>
@@ -327,8 +326,7 @@ export default function Landing() {
               whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
               viewport={{ once: true, margin: "-80px" }}
               transition={{ delay: i * 0.13, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-              onMouseMove={spot}
-              className="uc-card p-6 uc-ticks uc-spot-target transition-transform duration-300 hover:-translate-y-1.5"
+              className="uc-card p-6 uc-ticks cursor-default"
             >
               <span className="tl" /><span className="br" />
               <p.icon className="w-6 h-6 text-amber-500 mb-4" />

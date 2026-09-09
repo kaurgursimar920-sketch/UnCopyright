@@ -16,7 +16,7 @@ const OPTIONS = [
   },
 ];
 
-export default function WorkTypeSelector({ onPick, busy }) {
+export default function WorkTypeSelector({ onPick, busy, locked = false, selectedType = null, onNext }) {
   return (
     <div>
       <div className="uc-label mb-3">01 · Work type & scope</div>
@@ -28,20 +28,34 @@ export default function WorkTypeSelector({ onPick, busy }) {
       </p>
 
       <div className="grid md:grid-cols-2 gap-5">
-        {OPTIONS.map((o) => (
+        {OPTIONS.map((o) => {
+          const isSel = locked && selectedType === o.key;
+          return (
           <button
             key={o.key}
             data-testid={o.testid}
-            onClick={() => onPick(o.key)}
-            disabled={busy}
-            className="uc-card uc-card-hover uc-ticks p-8 text-left group transition-all disabled:opacity-50"
+            onClick={() => !locked && onPick(o.key)}
+            disabled={busy || locked}
+            className={`uc-card uc-ticks p-8 text-left group transition-all ${
+              locked
+                ? isSel
+                  ? "border-amber-500/50 bg-amber-500/[0.04] cursor-not-allowed"
+                  : "opacity-40 cursor-not-allowed"
+                : "uc-card-hover disabled:opacity-50"
+            }`}
           >
             <span className="tl" /><span className="br" />
             <div className="flex items-start justify-between mb-6">
               <div className="w-11 h-11 rounded bg-amber-500/10 border border-amber-500/30 flex items-center justify-center">
                 <o.icon className="w-5 h-5 text-amber-500" />
               </div>
-              <ArrowRight className="w-5 h-5 text-slate-600 group-hover:text-amber-500 group-hover:translate-x-1 transition-all" />
+              {locked ? (
+                <span className="text-xs font-mono text-amber-500/80 border border-amber-500/30 rounded px-1.5 py-0.5">
+                  {isSel ? "SELECTED · LOCKED" : "LOCKED"}
+                </span>
+              ) : (
+                <ArrowRight className="w-5 h-5 text-slate-600 group-hover:text-amber-500 group-hover:translate-x-1 transition-all" />
+              )}
             </div>
             <div className="uc-label mb-2">MVP · Fully supported</div>
             <h3 className="font-display text-2xl font-bold mb-3">{o.title}</h3>
@@ -55,8 +69,27 @@ export default function WorkTypeSelector({ onPick, busy }) {
               ))}
             </ul>
           </button>
-        ))}
+          );
+        })}
       </div>
+
+      {locked && (
+        <div className="mt-6 flex flex-wrap items-center gap-3">
+          <span
+            className="px-2.5 py-1 rounded text-xs font-mono border border-amber-500/40 text-amber-300 bg-amber-500/[0.06]"
+            data-testid="work-type-locked-badge"
+          >
+            ✓ Visual Artwork — locked · sample record
+          </span>
+          <Button
+            onClick={onNext}
+            className="bg-amber-600 hover:bg-amber-500 text-black font-semibold"
+            data-testid="btn-worktype-continue"
+          >
+            Continue to Evidence <ArrowRight className="w-4 h-4 ml-2" />
+          </Button>
+        </div>
+      )}
     </div>
   );
 }

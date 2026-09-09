@@ -30,6 +30,8 @@ Build **UnCopyright**: a jurisdiction-aware legal-tech platform ("From AI Creati
 
 - Sara demo v2 (2026-09-08, user-supplied): richer 8-event visual-artwork history (EV-001 sketch → EV-002 AI five outputs → EV-003 selection → EV-004 rearrangement → EV-005 face repaint [creator-missing-prompt evidence gap] → EV-006 background replacement → EV-007 final adjustments → EV-008 export, no new issue). Demo still flows through the existing engine — 39 conclusions, 13 claim-map rows, 1 UK reform warning. "Sarah" → "Sara" in user-facing labels. Stage renamed "Legal Syllogism" → "Legal Assessment" (methodology unchanged). Reform card tag now reads "⚠ Proposed Reform · Full explanation at the end of the assessment". Evidence-gap wording: "The original AI prompt and generation details were not provided by the creator." Jurisdiction label already "UK" everywhere (no "GB" occurrences found).
 
+- Sara demo lock steps (2026-09-09): demo now opens at step 01 Work Type with Visual Artwork pre-selected and locked (`locked` prop on WorkTypeSelector, `work-type-locked-badge`), then step 02 Evidence Ingestion shows a read-only "Sample evidence record" (`sample-evidence-record`) listing the 5 demo files consistent with the creation history — no upload inputs, no delete/replace/modify. Normal Evidence Workspace flow verified untouched (cards enabled, uploads functional).
+
 ## Test Results
 - `/app/test_reports/iteration_1.json`: backend 100% (13/13), all frontend flows pass, no blocking bugs.
 

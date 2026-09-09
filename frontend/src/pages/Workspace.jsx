@@ -43,7 +43,8 @@ export default function Workspace() {
         setWork(data.work);
         setEvents(data.events || []);
         setFiles(data.files || []);
-        if (data.events?.length) setStep("history");
+        if (data.work?.is_demo) setStep("type");
+        else if (data.events?.length) setStep("history");
       } catch (e) {
         toast.error("Could not load work");
       }
@@ -118,7 +119,13 @@ export default function Workspace() {
               transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
             >
               {step === "type" && (
-                <WorkTypeSelector onPick={onPickType} busy={busy} />
+                <WorkTypeSelector
+                  onPick={onPickType}
+                  busy={busy}
+                  locked={isDemo}
+                  selectedType={work?.work_type}
+                  onNext={() => setStep("upload")}
+                />
               )}
               {step === "upload" && (
                 <MaterialUpload
@@ -126,6 +133,7 @@ export default function Workspace() {
                   files={files}
                   onUploaded={(f) => setFiles((prev) => [...prev, f])}
                   onNext={() => setStep("history")}
+                  readOnly={isDemo}
                 />
               )}
               {step === "history" && (

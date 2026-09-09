@@ -14,8 +14,56 @@ const STAGES = [
   { key: "other", label: "Other Evidence", hint: "Anything else that documents the creative process." },
 ];
 
-export default function MaterialUpload({ work, files, onUploaded, onNext }) {
+export default function MaterialUpload({ work, files, onUploaded, onNext, readOnly = false }) {
   const [uploading, setUploading] = useState(false);
+
+  if (readOnly) {
+    return (
+      <div>
+        <div className="uc-label mb-3">02 · Evidence ingestion</div>
+        <h1 className="font-display text-4xl font-black tracking-tight mb-3">Sample evidence record.</h1>
+        <p className="text-slate-400 max-w-3xl mb-8">
+          This is a pre-populated demo record. The artefacts below correspond to the evidence referenced by Sara's
+          creation history. Uploads are disabled in the Sara sample.
+        </p>
+
+        <div className="uc-card p-5" data-testid="sample-evidence-record">
+          <div className="flex items-center justify-between mb-4">
+            <span className="uc-label">Sample evidence · {files.length} files on record</span>
+            <span
+              className="px-2.5 py-1 rounded text-xs font-mono border border-amber-500/40 text-amber-300 bg-amber-500/[0.06]"
+              data-testid="evidence-locked-badge"
+            >
+              ✓ Sample evidence available — locked
+            </span>
+          </div>
+          <ul className="space-y-2">
+            {files.map((f, i) => (
+              <li key={f.file_id || i} className="flex items-center gap-3 text-sm bg-white/[0.02] rounded px-3 py-2 border border-white/5">
+                <FileCheck2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                <span className="font-mono text-slate-200 flex-1 truncate">{f.file_name}</span>
+                <span className="text-xs text-slate-500 font-mono hidden md:block truncate max-w-[38%]">{f.description}</span>
+                <span className="uc-cite shrink-0">{f.stage}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="mt-8 flex flex-wrap items-center gap-3">
+          <Button
+            data-testid="btn-upload-continue"
+            onClick={onNext}
+            className="bg-amber-600 hover:bg-amber-500 text-black font-semibold"
+          >
+            Continue to Creation History <ArrowRight className="w-4 h-4 ml-2" />
+          </Button>
+          <span className="text-xs text-slate-500 font-mono">
+            Demo record — sample evidence cannot be uploaded, deleted, replaced or modified.
+          </span>
+        </div>
+      </div>
+    );
+  }
 
   const uploadFor = async (stage, fileList) => {
     if (!work?.id) { toast.error("No workspace"); return; }

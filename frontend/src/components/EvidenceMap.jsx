@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { ArrowRight, AlertTriangle, Link2 } from "lucide-react";
-import { ISSUE_LABEL } from "@/lib/api";
+import { ISSUE_LABEL, CERTAINTY_STYLES } from "@/lib/api";
 
 export default function EvidenceMap({ analysis, onNext }) {
   if (!analysis) return null;
@@ -36,8 +36,13 @@ export default function EvidenceMap({ analysis, onNext }) {
                     <div className="uc-label mt-1">EV {String(r.event_sequence).padStart(2, "0")} · {ISSUE_LABEL[r.issue]} · {r.jurisdiction}</div>
                   </div>
                 </div>
-                <div className="flex flex-wrap gap-1.5 pl-5">
-                  {r.supporting_evidence.length ? r.supporting_evidence.map((f) => (
+                <div className="flex flex-wrap gap-1.5 pl-5 items-center">
+                  <span className={`px-1.5 py-0.5 rounded border text-[0.6rem] font-mono ${(CERTAINTY_STYLES[r.event_certainty] || CERTAINTY_STYLES.KNOWN).cls}`}>
+                    {(CERTAINTY_STYLES[r.event_certainty] || CERTAINTY_STYLES.KNOWN).label}
+                  </span>
+                  {r.event_certainty === "UNKNOWN" ? (
+                    <span className="text-xs text-rose-400 font-mono">no sufficient record — not treated as an established fact</span>
+                  ) : r.supporting_evidence.length ? r.supporting_evidence.map((f) => (
                     <span key={f} className="uc-cite">{f}</span>
                   )) : <span className="text-xs text-rose-400 font-mono">no artefacts</span>}
                 </div>

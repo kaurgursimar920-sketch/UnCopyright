@@ -110,6 +110,15 @@ def test_analyze_demo_39_results(s):
     assert len(data.get("reform_warnings", [])) == 1
     ev05 = [x for x in data["results"] if x["creation_event_id"] == "EV-005"]
     assert any("not provided by the creator" in g for x in ev05 for g in x["evidence_gaps"])
+    # certainty carried through: UNKNOWN event must not become claimable or confident
+    assert all(x["event_certainty"] == "UNKNOWN" for x in ev05)
+    assert all(x["claim_position"] == "UNCERTAIN" for x in ev05)
+    assert all(x["confidence"] == "LOW" for x in ev05)
+    assert any("not treated as an established fact" in f for x in ev05 for f in x["facts"])
+    # INFERRED event stays qualified, never promoted to KNOWN
+    ev03 = [x for x in data["results"] if x["creation_event_id"] == "EV-003"]
+    assert all(x["event_certainty"] == "INFERRED" for x in ev03)
+    assert all(x["claim_position"] == "UNCERTAIN" for x in ev03)
 
 
 def test_analyze_events_flow(s):

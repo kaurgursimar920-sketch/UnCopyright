@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, ExternalLink, ChevronDown, ChevronUp } from "lucide-react";
-import { POSITION_STYLES, ISSUE_LABEL, JURI_META, ACTOR_STYLES } from "@/lib/api";
+import { POSITION_STYLES, ISSUE_LABEL, JURI_META, ACTOR_STYLES, CERTAINTY_STYLES } from "@/lib/api";
 
 export default function LegalAnalysisView({ analysis, onNext }) {
   const grouped = useMemo(() => {
@@ -60,8 +60,15 @@ function EventGroup({ event, items }) {
           <div className="font-display text-3xl font-black text-amber-500">{String(event.event_sequence).padStart(2, "0")}</div>
         </div>
         <div className="flex-1">
-          <div className="flex items-center gap-2 mb-1.5">
+          <div className="flex items-center gap-2 mb-1.5 flex-wrap">
             <span className={`px-2 py-0.5 text-[0.7rem] font-mono border rounded ${ACTOR_STYLES[event.event_actor]?.cls}`}>{event.event_actor}</span>
+            <span
+              className={`px-2 py-0.5 text-[0.7rem] font-mono border rounded ${(CERTAINTY_STYLES[event.event_certainty] || CERTAINTY_STYLES.KNOWN).cls}`}
+              data-testid={`certainty-badge-${event.creation_event_id}`}
+              title={(CERTAINTY_STYLES[event.event_certainty] || CERTAINTY_STYLES.KNOWN).label}
+            >
+              {event.event_certainty}
+            </span>
             <span className="uc-label">{event.creation_event_id}</span>
           </div>
           <div className="text-slate-100">{event.event_description}</div>

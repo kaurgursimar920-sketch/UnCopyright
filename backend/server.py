@@ -218,6 +218,11 @@ def _make_facts(event: dict) -> List[str]:
     facts = [event["description"]]
     if event.get("source_files"):
         facts.append(f"Source files on record: {', '.join(event['source_files'])}.")
+    certainty = event.get("certainty", "KNOWN")
+    if certainty == "INFERRED":
+        facts.append("Certainty: INFERRED — this event is a reasonable inference from the record, not directly established.")
+    elif certainty == "UNKNOWN":
+        facts.append("Certainty: UNKNOWN — the record does not establish this event; it is not treated as an established fact or a definite human contribution.")
     return facts
 
 
@@ -299,6 +304,7 @@ async def analyze(work_id: str, req: AnalyzeRequest):
                     "event_sequence": event["sequence"],
                     "event_description": event["description"],
                     "event_actor": event["actor"],
+                    "event_certainty": event.get("certainty", "KNOWN"),
                     "jurisdiction": jur,
                     "issue": issue,
                     "authority_id": authority["authority_id"],

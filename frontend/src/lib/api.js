@@ -50,6 +50,12 @@ export const ACTOR_STYLES = {
   HYBRID:{ label: "HYBRID",cls: "bg-pink-500/10 text-pink-300 border-pink-500/30" },
 };
 
+export const CERTAINTY_STYLES = {
+  KNOWN:   { label: "KNOWN — directly supported",   cls: "bg-emerald-500/10 text-emerald-400 border-emerald-500/30" },
+  INFERRED:{ label: "INFERRED — reasonable inference", cls: "bg-amber-500/10 text-amber-400 border-amber-500/30" },
+  UNKNOWN: { label: "UNKNOWN — no record",          cls: "bg-rose-500/10 text-rose-400 border-rose-500/30" },
+};
+
 export const JURI_META = {
   "India":          { code: "IN", flag: "🇮🇳", law: "Copyright Act, 1957" },
   "United States":  { code: "US", flag: "🇺🇸", law: "USCO Copyrightability Report (2025)" },

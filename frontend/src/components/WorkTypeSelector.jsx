@@ -49,11 +49,7 @@ export default function WorkTypeSelector({ onPick, busy, locked = false, selecte
               <div className="w-11 h-11 rounded bg-amber-500/10 border border-amber-500/30 flex items-center justify-center">
                 <o.icon className="w-5 h-5 text-amber-500" />
               </div>
-              {locked ? (
-                <span className="text-xs font-mono text-amber-500/80 border border-amber-500/30 rounded px-1.5 py-0.5">
-                  {isSel ? "SELECTED · LOCKED" : "LOCKED"}
-                </span>
-              ) : (
+              {!locked && (
                 <ArrowRight className="w-5 h-5 text-slate-600 group-hover:text-amber-500 group-hover:translate-x-1 transition-all" />
               )}
             </div>
@@ -79,7 +75,7 @@ export default function WorkTypeSelector({ onPick, busy, locked = false, selecte
             className="px-2.5 py-1 rounded text-xs font-mono border border-amber-500/40 text-amber-300 bg-amber-500/[0.06]"
             data-testid="work-type-locked-badge"
           >
-            ✓ Visual Artwork — locked · sample record
+            ✓ Visual Artwork · sample record
           </span>
           <Button
             onClick={onNext}

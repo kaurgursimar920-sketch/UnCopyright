@@ -217,6 +217,8 @@ def claim_position(issue: str, jurisdiction: str, certainty: str) -> str:
 
 
 def confidence_level(certainty: str, has_evidence: bool) -> str:
+    if certainty == "UNKNOWN":
+        return "LOW"
     if certainty == "KNOWN" and has_evidence:
         return "HIGH"
     if certainty == "KNOWN" or has_evidence:
